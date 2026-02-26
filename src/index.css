@@ -1,8 +1,8 @@
 /* =====================================================
    TET PLANNER PRO - GLOBAL DESIGN SYSTEM
    ===================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap');
 @import "tailwindcss";
-
 /* ===============================
    1. ROOT VARIABLES (LIGHT THEME)
    =============================== */
@@ -51,7 +51,7 @@
     --fw-regular: 400;
     --fw-medium: 500;
     --fw-semibold: 600;
-    --fw-bold: 800;
+    --fw-bold: 700;
   
     /* ===== SPACING (8pt system) ===== */
     --space-1: 4px;
@@ -148,7 +148,7 @@
     font-family: var(--font-family-base);
     background: var(--color-bg-main);
     color: var(--color-text-primary);
-    font-size: var(--fs-md);
+    font-size: var(--fs-ms);
     line-height: 1.5;
   }
   
@@ -213,4 +213,3 @@
   .rounded-lg {
     border-radius: var(--radius-lg);
   }
-  
