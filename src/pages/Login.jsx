@@ -1,78 +1,138 @@
 import { useState } from "react";
-import cover from "./asset/cover.jpg";
+import { Eye, EyeOff } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import cover from "../assets/cover.jpg";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Dữ liệu đăng nhập:", { email, password });
+    setError(""); // Reset lỗi mỗi lần nhấn Login lại
 
-    // Tạm thời: Lưu vào localStorage để giả lập đã đăng nhập
+    //Logic giả lập kiểm tra pass 123
+    if (password !== "123") {
+      setError("Incorrect password. Please try again!");
+      return; //
+    }
+
+    // Nếu đúng 123
+    console.log("Dữ liệu đăng nhập:", { email, password });
     localStorage.setItem("user", JSON.stringify({ email, isLogin: true }));
-    alert("Đăng nhập thành công!");
+    alert("Login successfully!");
   };
 
   return (
     <div className="h-screen w-full flex bg-[#F8FAFC] overflow-hidden">
-      {/* NỬA BÊN TRÁI: HÌNH COVER */}
+      {/* LEFT SIDE: HÌNH COVER */}
       <div className="hidden lg:flex lg:w-1/2 h-full relative">
         <img src={cover} alt="Cover" className="h-full w-full object-cover" />
       </div>
 
-      {/* NỬA BÊN PHẢI: FORM ĐĂNG NHẬP */}
+      {/* RIGHT SIDE: FORM ĐĂNG NHẬP */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 h-full">
         <div className="w-full max-w-md">
-          {" "}
+          {/* LOGO*/}
+          <div className="text-center mb-10">
+            <h1 className="text-4xl font-bold tracking-tight">
+              <span className="text-black">TetPlanner</span>
+              <span className="text-[#E11D48]">Pro</span>
+            </h1>
+          </div>
+
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-[#E11D48] mb-2">
               Welcome back
             </h2>
-
             <p className="text-[#E11D48] font-medium">Login to continue</p>
           </div>
+
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+            {/* EMAIL */}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm font-medium text-[#E11D48]">
                 Email Address
               </label>
-
               <input
                 type="email"
                 placeholder="example@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full p-3 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+                required
               />
             </div>
 
+            {/* PASSWORD*/}
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label className="block text-sm font-medium text-[#E11D48]">
                 Password
               </label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    if (error) setError(""); //Xóa thông báo lỗi khi user bắt đầu gõ lại
+                  }}
+                  className={`w-full p-3 border rounded-lg outline-none transition-all pr-12 ${
+                    error
+                      ? "border-red-500 focus:ring-red-200"
+                      : "border-slate-200 focus:ring-blue-500"
+                  }`}
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
 
-              <input
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-3 border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-              />
+              {/*Hiển thị dòng tin nhắn lỗi dưới ô Input */}
+              {error && (
+                <p className="text-red-500 text-xs mt-1.5 font-medium animate-shake">
+                  {error}
+                </p>
+              )}
             </div>
 
             <div className="flex items-center justify-between text-sm">
-              <a href="#" className="text-[#E11D48] hover:underline">
+              <button
+                type="button"
+                onClick={() => navigate("/forgot-password")}
+                className="text-[#E11D48] hover:underline"
+              >
                 Forgot Password?
-              </a>
+              </button>
             </div>
 
+            {/* BUTTON LOGIN*/}
             <button
               type="submit"
-              className="w-[343px] h-[50px] rounded-[10px] bg-[#E11D48] text-white font-semibold transition-all hover:opacity-90 active:scale-95"
+              className="w-[343px] h-[50px] mx-auto rounded-[10px] bg-[#E11D48] text-white font-semibold transition-all hover:opacity-90 active:scale-95"
             >
               LOGIN
             </button>
+            <div className="text-center mt-6 text-sm text-slate-600">
+              Don’t have an account?{" "}
+              <button
+                type="button"
+                onClick={() => navigate("/signup")} // Link sẵn đến trang signup
+                className="text-[#E11D48] hover:underline"
+              >
+                Sign up now
+              </button>
+            </div>
           </form>
         </div>
       </div>
