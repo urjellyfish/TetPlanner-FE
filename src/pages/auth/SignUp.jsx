@@ -3,17 +3,17 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { HiMail } from "react-icons/hi";
-import { IoEye, IoEyeOff } from "react-icons/io5";
+import { HiOutlineMail } from "react-icons/hi";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import FlowerLogo from "../../components/FlowerLogo.jsx";
 
 const labelCls =
-  "text-sm font-medium text-[#e11d48]";
+  "text-[14px] font-medium text-[#e11d48]";
 
 const inputCls =
   "w-full h-11 bg-white rounded-[5px] border border-[#e11d48] " +
-  "text-sm font-medium text-[#111] placeholder:text-gray-300 " +
-  "outline-none focus:ring-2 focus:ring-[#e11d48]/20 " +
+  "text-[14px] font-medium text-[#111] placeholder-[#111] " +
+  "outline-none focus:ring-1 focus:ring-[#e11d48] " +
   /* Fix Chrome autofill nền xanh */
   "[&:-webkit-autofill]:shadow-[0_0_0px_1000px_white_inset] " +
   "[&:-webkit-autofill]:[transition:background-color_9999s]";
@@ -50,7 +50,7 @@ function SignUp() {
   };
 
   return (
-    <div className="w-screen h-screen bg-[#f8fafc] flex overflow-hidden">
+    <div className="w-screen h-screen flex overflow-hidden bg-white">
 
       {/* ── Left cover ── */}
       <div
@@ -59,20 +59,22 @@ function SignUp() {
       />
 
       {/* ── Right panel ── */}
-      <div className="flex-1 flex items-center justify-center px-8 overflow-y-auto">
+      <div className="flex-1 flex items-center justify-center px-8 bg-white overflow-y-auto">
         <div className="w-full max-w-[343px] py-10">
 
           {/* Logo + brand */}
-          <div className="flex items-center gap-3 mb-10">
-            <FlowerLogo />
-            <p className="font-extrabold text-[22px] leading-tight tracking-tight">
+          <div className="flex items-center justify-center gap-[6px] mb-2">
+            <div className="flex-shrink-0 mt-0.5">
+              <FlowerLogo />
+            </div>
+            <p className="font-extrabold text-[22px] leading-none tracking-tight">
               <span className="text-[#1e293b]">Tet Planner </span>
               <span className="text-[#e11d48]">Pro</span>
             </p>
           </div>
 
           {/* Title */}
-          <h1 className="text-lg font-bold text-[#e11d48] text-center mb-8">
+          <h1 className="text-[15px] font-bold text-[#e11d48] text-center mb-[30px]">
             Create An Account
           </h1>
 
@@ -92,7 +94,7 @@ function SignUp() {
               <input
                 type="text"
                 className={`${inputCls} px-5`}
-                placeholder="Nguyen Van A"
+                placeholder="Happy New Year"
                 {...register("name", { required: "Name is required" })}
               />
               {errors.name && (
@@ -104,13 +106,13 @@ function SignUp() {
             <div className="flex flex-col gap-1">
               <label className={labelCls}>Email Address</label>
               <div className="relative">
-                <span className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                  <HiMail className="w-[18px] h-[18px] text-gray-400" />
+                <span className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                  <HiOutlineMail className="w-[18px] h-[18px] text-[#e11d48]" />
                 </span>
                 <input
                   type="email"
-                  className={`${inputCls} pl-10 pr-5`}
-                  placeholder="nguyenvana@gmail.com"
+                  className={`${inputCls} pl-11 pr-5`}
+                  placeholder="happynewyear@gmail.com"
                   {...register("email", {
                     required: "Email is required",
                     pattern: { value: /^\S+@\S+\.\S+$/, message: "Invalid email" },
@@ -128,8 +130,8 @@ function SignUp() {
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  className={`${inputCls} pl-5 pr-11`}
-                  placeholder="********"
+                  className={`${inputCls} pl-5 pr-12`}
+                  placeholder="Happynewyear12345"
                   {...register("password", {
                     required: "Password is required",
                     minLength: { value: 8, message: "Min 8 characters" },
@@ -138,12 +140,12 @@ function SignUp() {
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
+                  className="absolute inset-y-0 right-4 flex items-center text-[#111] hover:text-gray-600"
                   aria-label="Toggle password visibility"
                 >
                   {showPassword
-                    ? <IoEyeOff className="w-[18px] h-[18px]" />
-                    : <IoEye    className="w-[18px] h-[18px]" />}
+                    ? <IoEyeOffOutline className="w-[18px] h-[18px]" />
+                    : <IoEyeOutline    className="w-[18px] h-[18px]" />}
                 </button>
               </div>
               {errors.password && (
@@ -157,8 +159,8 @@ function SignUp() {
               <div className="relative">
                 <input
                   type={showConfirm ? "text" : "password"}
-                  className={`${inputCls} pl-5 pr-11`}
-                  placeholder="********"
+                  className={`${inputCls} pl-5 pr-12`}
+                  placeholder="Happynewyear12345"
                   {...register("confirmPassword", {
                     required: "Please confirm your password",
                     validate: (v) => v === password || "Passwords do not match",
@@ -167,12 +169,12 @@ function SignUp() {
                 <button
                   type="button"
                   onClick={() => setShowConfirm((v) => !v)}
-                  className="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600"
+                  className="absolute inset-y-0 right-4 flex items-center text-[#111] hover:text-gray-600"
                   aria-label="Toggle confirm password visibility"
                 >
                   {showConfirm
-                    ? <IoEyeOff className="w-[18px] h-[18px]" />
-                    : <IoEye    className="w-[18px] h-[18px]" />}
+                    ? <IoEyeOffOutline className="w-[18px] h-[18px]" />
+                    : <IoEyeOutline    className="w-[18px] h-[18px]" />}
                 </button>
               </div>
               {errors.confirmPassword && (
@@ -181,21 +183,21 @@ function SignUp() {
             </div>
 
             {/* Submit */}
-            <div className="flex flex-col items-center gap-5 mt-6">
+            <div className="flex flex-col items-center gap-[18px] mt-4">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-[50px] rounded-[10px] bg-[#e11d48] hover:bg-[#be123c] disabled:opacity-60 transition-colors text-white text-base font-bold tracking-wide"
+                className="w-full h-12 rounded-[6px] bg-[#e11d48] hover:bg-[#be123c] disabled:opacity-60 transition-colors text-white text-[15px] font-medium tracking-wide"
               >
                 {isSubmitting ? "Signing up..." : "SIGN UP"}
               </button>
 
-              <p className="text-[13px] text-[#374151]">
+              <p className="text-[13px] text-[#111]">
                 Have an account already?{" "}
                 <button
                   type="button"
                   onClick={() => navigate("/login")}
-                  className="text-[#e11d48] font-semibold hover:underline"
+                  className="text-[#e11d48] font-medium hover:underline"
                 >
                   Log in
                 </button>
