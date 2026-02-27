@@ -1,10 +1,11 @@
-import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import CreateNewItem from "./pages/shopping-item/CreateNewItem";
 
 function App() {
   return (
-    <>
-      <p>Hello</p>
-    </>
+    <Routes>
+      <Route path="/" element={<CreateNewItem />} />
+    </Routes>
   );
 }
 
