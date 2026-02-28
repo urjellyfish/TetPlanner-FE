@@ -7,134 +7,154 @@
    1. ROOT VARIABLES (LIGHT THEME)
    =============================== */
 
-   :root {
-    /* ===== BRAND ===== */
-    --color-primary-500: #E11D48;
-    --color-primary-400: #f87171;
-    --color-primary-300: #fca5a5;
-  
-    --gradient-primary: linear-gradient(135deg, #E11D48 0%, #DC2626 50%, #BE123C 100%);
-    --color-accent: #facc15;
-  
-    /* ===== STATUS ===== */
-    --color-success: #22c55e;
-    --color-warning: #f59e0b;
-    --color-danger: #ef4444;
-    --color-info: #3b82f6;
-  
-    /* ===== BACKGROUND ===== */
-    --color-bg-main: #f9fafb;
-    --color-bg-card: #ffffff;
-    --color-bg-sidebar: #f3f4f6;
-  
-    /* ===== TEXT ===== */
-    --color-text-primary: #1E293B;
-    --color-text-secondary: #6b7280;
-    --color-text-muted: #9ca3af;
-    --color-text-inverse: #ffffff;
-  
-    /* ===== BORDER ===== */
-    --color-border-light: #e5e7eb;
-    --color-border-medium: #d1d5db;
-  
-    /* ===== TYPOGRAPHY ===== */
-    --font-family-base: "Plus Jakarta Sans", sans-serif;
-  
-    --fs-xs: 12px;
-    --fs-sm: 14px;
-    --fs-md: 16px;
-    --fs-lg: 18px;
-    --fs-xl: 20px;
-    --fs-2xl: 24px;
-    --fs-3xl: 32px;
-  
-    --fw-regular: 400;
-    --fw-medium: 500;
-    --fw-semibold: 600;
-    --fw-bold: 700;
-  
-    /* ===== SPACING (8pt system) ===== */
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 24px;
-    --space-6: 32px;
-    --space-7: 40px;
-    --space-8: 48px;
-  
-    /* ===== RADIUS ===== */
-    --radius-sm: 6px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-  
-    /* ===== SHADOW ===== */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
-  
-    /* ===== PROGRESS COLORS ===== */
-    --progress-task: var(--color-primary-500);
-    --progress-shopping: var(--color-success);
-    --progress-budget: var(--color-warning);
-  
-    /* ===== BUTTON TOKENS ===== */
-    --btn-primary-bg: var(--gradient-primary);
-    --btn-primary-text: var(--color-text-inverse);
-    --btn-primary-shadow: 0 10px 15px -3px rgba(225, 29, 72, 0.20),
-      0 4px 6px -4px rgba(225, 29, 72, 0.20);
-    --btn-primary-hover-opacity: 0.9;
-  }
-  
-  /* ===============================
+:root {
+  /* ===== BRAND ===== */
+  --color-primary-500: #e11d48;
+  --color-primary-400: #f87171;
+  --color-primary-300: #fca5a5;
+
+  --gradient-primary: linear-gradient(
+    135deg,
+    #e11d48 0%,
+    #dc2626 50%,
+    #be123c 100%
+  );
+  --color-accent: #facc15;
+
+  /* ===== STATUS ===== */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #3b82f6;
+
+  /* ===== BACKGROUND ===== */
+  --color-bg-main: #f9fafb;
+  --color-bg-card: #ffffff;
+  --color-bg-sidebar: #f3f4f6;
+
+  /* ===== TEXT ===== */
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #6b7280;
+  --color-text-muted: #9ca3af;
+  --color-text-inverse: #ffffff;
+
+  /* ===== BORDER ===== */
+  --color-border-light: #e5e7eb;
+  --color-border-medium: #d1d5db;
+
+  /* ===== TYPOGRAPHY ===== */
+  --font-family-base: "Plus Jakarta Sans", sans-serif;
+
+  --fs-xs: 12px;
+  --fs-sm: 14px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 20px;
+  --fs-2xl: 24px;
+  --fs-3xl: 32px;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 800;
+
+  /* ===== SPACING (8pt system) ===== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+
+  /* ===== RADIUS ===== */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* ===== SHADOW ===== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+  /* ===== PROGRESS COLORS ===== */
+  --progress-task: var(--color-primary-500);
+  --progress-shopping: var(--color-success);
+  --progress-budget: var(--color-warning);
+
+  /* ===== BUTTON TOKENS ===== */
+  --btn-primary-bg: var(--gradient-primary);
+  --btn-primary-text: var(--color-text-inverse);
+  --btn-primary-shadow:
+    0 10px 15px -3px rgba(225, 29, 72, 0.2),
+    0 4px 6px -4px rgba(225, 29, 72, 0.2);
+  --btn-primary-hover-opacity: 0.9;
+}
+
+/* ===============================
        2. DARK THEME OVERRIDE
        =============================== */
-  
-  [data-theme="cherry-pink"] {
-    /* ===== BRAND ===== */
-    --color-primary-500: #FF6596;
-    --color-primary-400: #FF91AD;
-    --color-primary-300: #FFBECE;
-  
-    --gradient-primary: linear-gradient(135deg, rgba(255, 101, 150, 0.30) 0%, rgba(255, 145, 173, 0.30) 50%, rgba(255, 190, 206, 0.30) 100%);
-  
-    --color-accent: #FF6898;
-    /* need update color for cherry theme */
-    --color-bg-main: #111827;
-    --color-bg-card: #1f2937;
-    --color-bg-sidebar: #0f172a;
-  
-    --color-text-primary: #f9fafb;
-    --color-text-secondary: #d1d5db;
-    --color-text-muted: #9ca3af;
-  
-    --color-border-light: #374151;
-  
-    /* ===== BUTTON TOKENS ===== */
-    --btn-primary-bg: var(--color-primary-500);
-    --btn-primary-text: var(--color-text-inverse);
-    --btn-primary-shadow: 0 10px 15px -3px rgba(225, 29, 72, 0.20), 0 4px 6px -4px rgba(225, 29, 72, 0.20);
-    --btn-primary-hover-opacity: 0.9;
-  }
-  
-  [data-theme="apricot-yellow"] {
-    /* ===== BRAND ===== */
-    --color-primary-500: #F5BC00;
-    --color-primary-400: #FFC511;
-    --color-primary-300: #fcdE88;
-  
-    --gradient-primary: linear-gradient(135deg, rgba(255, 232, 57, 0.70) 0%, rgba(255, 204, 20, 0.70) 50%, rgba(255, 226, 134, 0.70) 100%);
-    --color-accent: #EA9A2B;
-    /* need update color for apricot theme */
-  
-    /* ===== BUTTON TOKENS ===== */
-    --btn-primary-bg: var(--color-primary-500);
-    --btn-primary-text: var(--color-text-inverse);
-    --btn-primary-shadow: 0 10px 15px -3px rgba(255, 233, 166, 0.60), 0 4px 6px -4px rgba(255, 215, 0, 0.10);
-    --btn-primary-hover-opacity: 0.9;
-  }
-  
-  /* ===============================
+
+[data-theme="cherry-pink"] {
+  /* ===== BRAND ===== */
+  --color-primary-500: #ff6596;
+  --color-primary-400: #ff91ad;
+  --color-primary-300: #ffbece;
+
+  --gradient-primary: linear-gradient(
+    135deg,
+    rgba(255, 101, 150, 0.3) 0%,
+    rgba(255, 145, 173, 0.3) 50%,
+    rgba(255, 190, 206, 0.3) 100%
+  );
+
+  --color-accent: #ff6898;
+  /* need update color for cherry theme */
+  --color-bg-main: #111827;
+  --color-bg-card: #1f2937;
+  --color-bg-sidebar: #0f172a;
+
+  --color-text-primary: #f9fafb;
+  --color-text-secondary: #d1d5db;
+  --color-text-muted: #9ca3af;
+
+  --color-border-light: #374151;
+
+  /* ===== BUTTON TOKENS ===== */
+  --btn-primary-bg: var(--color-primary-500);
+  --btn-primary-text: var(--color-text-inverse);
+  --btn-primary-shadow:
+    0 10px 15px -3px rgba(225, 29, 72, 0.2),
+    0 4px 6px -4px rgba(225, 29, 72, 0.2);
+  --btn-primary-hover-opacity: 0.9;
+}
+
+[data-theme="apricot-yellow"] {
+  /* ===== BRAND ===== */
+  --color-primary-500: #f5bc00;
+  --color-primary-400: #ffc511;
+  --color-primary-300: #fcde88;
+
+  --gradient-primary: linear-gradient(
+    135deg,
+    rgba(255, 232, 57, 0.7) 0%,
+    rgba(255, 204, 20, 0.7) 50%,
+    rgba(255, 226, 134, 0.7) 100%
+  );
+  --color-accent: #ea9a2b;
+  /* need update color for apricot theme */
+
+  /* ===== BUTTON TOKENS ===== */
+  --btn-primary-bg: var(--color-primary-500);
+  --btn-primary-text: var(--color-text-inverse);
+  --btn-primary-shadow:
+    0 10px 15px -3px rgba(255, 233, 166, 0.6),
+    0 4px 6px -4px rgba(255, 215, 0, 0.1);
+  --btn-primary-hover-opacity: 0.9;
+}
+
+/* ===============================
        3. GLOBAL RESET
        =============================== */
   
@@ -153,46 +173,46 @@
   /* ===============================
        4. REUSABLE COMPONENT BASE
        =============================== */
-  
-  .card {
-    background: var(--color-bg-card);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    padding: var(--space-4);
-  }
-  
-  .btn {
-    border: none;
-    border-radius: var(--radius-md);
-    padding: var(--space-2) var(--space-4);
-    font-weight: var(--fw-medium);
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .btn-primary {
-    background: var(--btn-primary-bg);
-    color: var(--btn-primary-text);
-    box-shadow: var(--btn-primary-shadow);
-  }
-  
-  .btn-primary:hover {
-    opacity: var(--btn-primary-hover-opacity);
-  }
-  
-  .progress-bar {
-    height: 8px;
-    border-radius: var(--radius-sm);
-    background: var(--color-border-light);
-    overflow: hidden;
-  }
-  
-  .progress-fill {
-    height: 100%;
-    border-radius: var(--radius-sm);
-  }
-  
-  /* ===============================
+
+.card {
+  background: var(--color-bg-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--space-4);
+}
+
+.btn {
+  border: none;
+  border-radius: var(--radius-md);
+  padding: var(--space-2) var(--space-4);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  box-shadow: var(--btn-primary-shadow);
+}
+
+.btn-primary:hover {
+  opacity: var(--btn-primary-hover-opacity);
+}
+
+.progress-bar {
+  height: 8px;
+  border-radius: var(--radius-sm);
+  background: var(--color-border-light);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: var(--radius-sm);
+}
+
+/* ===============================
        5. UTILITY CLASSES
        =============================== */
   
