@@ -37,3 +37,33 @@ export async function sendOTP(email) {
     throw new Error(error.response?.data?.message || "Failed to resend OTP. Please try again.");
   }
 }
+
+// POST /api/auth/login
+export async function loginService({ email, password }) {
+  try {
+    const response = await api.post("/auth/login", { email, password });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Login failed. Please try again.");
+  }
+}
+
+// POST /api/auth/forgot-password
+export async function forgotPasswordService({ email }) {
+  try {
+    const response = await api.post("/auth/forgot-password", { email });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to send reset link. Please try again.");
+  }
+}
+
+// POST /api/auth/reset-password
+export async function resetPasswordService({ token, newPassword }) {
+  try {
+    const response = await api.post(`/auth/reset-password?token=${token}`, { newPassword });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || "Failed to reset password. Please try again.");
+  }
+}
