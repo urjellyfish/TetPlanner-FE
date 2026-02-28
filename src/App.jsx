@@ -3,6 +3,8 @@ import "./App.css";
 import SideBar from "./components/SideBar";
 import Dashboard from "./pages/Dashboard";
 import Tasks from "./pages/Tasks";
+import CreateTask from "./pages/CreateTask";
+import EditTask from "./pages/EditTask";
 import Shopping from "./pages/Shopping";
 import Calendar from "./pages/Calendar";
 
@@ -25,6 +27,20 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/reset-success" element={<ResetPassSuccess />} />
+        <Route
+          path="/*"
+          element={
+            <div className="w-full h-screen flex bg-(--color-bg-main)">
+              <SideBar />
+              <Routes>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/tasks" element={<Tasks />} />
+                <Route path="/shopping" element={<Shopping />} />
+                <Route path="/calendar" element={<Calendar />} />
+              </Routes>
+            </div>
+          }
+        />
       </Routes>
       <ToastContainer
         position="top-right"
@@ -33,15 +49,6 @@ function App() {
         theme="colored"
       />
     </>
-    <div className="w-full h-screen flex bg-(--color-bg-main)">
-      <SideBar />
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/tasks" element={<Tasks />} />
-        <Route path="/shopping" element={<Shopping />} />
-        <Route path="/calendar" element={<Calendar />} />
-      </Routes>
-    </div>
   );
 }
 export default App;
