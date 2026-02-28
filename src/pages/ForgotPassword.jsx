@@ -19,9 +19,9 @@ function ForgotPassword() {
     try {
       const res = await forgotPassword({ email });
       if (res && res.success) {
-         setSuccess("We have shared a new password reset link to your email!");
-         // Optionally wait for a bit, then tell the user to check their email
-         // navigate("/reset-password"); // usually you don't navigate directly, they have to click the link in email first, but for this flow let's just show success
+        setSuccess("We have shared a new password reset link to your email!");
+        // Optionally wait for a bit, then tell the user to check their email
+        // navigate("/reset-password"); // usually you don't navigate directly, they have to click the link in email first, but for this flow let's just show success
       }
     } catch (err) {
       setError(err.message || "Failed to send reset link.");
@@ -65,12 +65,14 @@ function ForgotPassword() {
                 placeholder="Enter Email Address"
                 value={email}
                 onChange={(e) => {
-                   setEmail(e.target.value);
-                   if (error) setError("");
-                   if (success) setSuccess("");
+                  setEmail(e.target.value);
+                  if (error) setError("");
+                  if (success) setSuccess("");
                 }}
                 className={`w-full p-3 border rounded-lg outline-none transition-all ${
-                  error ? "border-red-500 focus:ring-red-200" : "border-slate-200 focus:ring-blue-500"
+                  error
+                    ? "border-red-500 focus:ring-red-200"
+                    : "border-slate-200 focus:ring-blue-500"
                 }`}
                 required
               />
@@ -89,7 +91,7 @@ function ForgotPassword() {
             <button
               type="submit"
               disabled={loading}
-              className="w-[343px] h-[50px] mx-auto rounded-[10px] bg-[#E11D48] text-white font-semibold transition-all hover:opacity-90 active:scale-95 disabled:opacity-50"
+              className="w-85.75 h-12.5 mx-auto rounded-[10px] bg-[#E11D48] text-white font-semibold transition-all hover:opacity-90 active:scale-95 disabled:opacity-50"
             >
               {loading ? "SENDING..." : "SEND"}
             </button>
