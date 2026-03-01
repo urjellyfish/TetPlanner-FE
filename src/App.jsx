@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 import SideBar from "./components/SideBar";
 import Dashboard from "./pages/Dashboard";
 import Tasks from "./pages/Tasks";
@@ -28,10 +29,15 @@ function App() {
         <Route path="/reset-success" element={<ResetPassSuccess />} />
       </Routes>
       <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        theme="colored"
+        position="top-center"
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
       />
 
       <div className="w-full h-screen flex bg-(--color-bg-main)">
@@ -41,6 +47,7 @@ function App() {
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/shopping" element={<Shopping />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/shopping-item/create" element={<CreateNewItem />} />
         </Routes>
       </div>
     </>
