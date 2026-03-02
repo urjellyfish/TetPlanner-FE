@@ -21,10 +21,10 @@ export default function DeleteTaskModal({ isOpen, task, onClose, onConfirm }) {
 
           {/* Text */}
           <div className="flex flex-col items-center gap-1 text-center">
-            <span className="text-[30px] font-bold leading-9 text-(--color-text-primary) transition-colors duration-200">
+            <span className="text-3xl font-bold leading-9 text-(--color-text-primary) transition-colors duration-200">
               Delete Confirmation
             </span>
-            <span className="text-[14px] font-normal leading-5 text-(--color-text-secondary) transition-colors duration-200">
+            <span className="text-sm font-normal leading-5 text-(--color-text-secondary) transition-colors duration-200">
               Are you sure you want to delete{" "}
               <span className="font-semibold text-(--color-text-primary)">
                 "{task?.title}"

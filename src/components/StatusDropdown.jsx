@@ -3,27 +3,28 @@ import { Check } from "lucide-react";
 
 // ─── Style Maps ────────────────────────────────────────────────────────────────
 const BADGE_STYLES = {
-  TODO:        "bg-slate-100 text-slate-500 border border-slate-200",
-  IN_PROGRESS: "bg-blue-100 text-blue-700 border border-blue-200",
-  DONE:        "bg-green-100 text-green-700 border border-green-200",
+  TODO: "bg-(--color-bg-sidebar) text-(--color-text-secondary) border-(--color-border-medium)",
+  IN_PROGRESS:
+    "bg-(--color-info)/15 text-(--color-info) border-(--color-info)/30",
+  DONE: "bg-(--color-success)/15 text-(--color-success) border-(--color-success)/30",
 };
 
 const OPTION_ACTIVE = {
-  TODO:        "bg-slate-100 text-slate-600",
-  IN_PROGRESS: "bg-blue-50 text-blue-700",
-  DONE:        "bg-green-50 text-green-700",
+  TODO: "bg-(--color-border-light) text-(--color-text-primary)",
+  IN_PROGRESS: "bg-(--color-info)/10 text-(--color-info)",
+  DONE: "bg-(--color-success)/10 text-(--color-success)",
 };
 
 const DOT_COLOR = {
-  TODO:        "bg-slate-400",
-  IN_PROGRESS: "bg-blue-500",
-  DONE:        "bg-green-500",
+  TODO: "bg-(--color-text-muted)",
+  IN_PROGRESS: "bg-(--color-info)",
+  DONE: "bg-(--color-success)",
 };
 
 const STATUS_LABELS = {
-  TODO:        "To Do",
+  TODO: "To Do",
   IN_PROGRESS: "In Progress",
-  DONE:        "Done",
+  DONE: "Done",
 };
 
 const STATUSES = ["TODO", "IN_PROGRESS", "DONE"];
@@ -32,8 +33,8 @@ const STATUSES = ["TODO", "IN_PROGRESS", "DONE"];
  * Inline status badge that opens a custom dropdown on click.
  *
  * Props:
- *   task            – task object (needs .id and .status)
- *   onStatusChange  – (id, newStatus) => void
+ * task           – task object (needs .id and .status)
+ * onStatusChange – (id, newStatus) => void
  */
 const StatusDropdown = ({ task, onStatusChange }) => {
   const [open, setOpen] = useState(false);
@@ -58,14 +59,16 @@ const StatusDropdown = ({ task, onStatusChange }) => {
     setOpen(false);
   };
 
-  const badge = BADGE_STYLES[task.status] ?? "bg-gray-100 text-gray-500 border border-gray-200";
+  const badge =
+    BADGE_STYLES[task.status] ??
+    "bg-(--color-bg-sidebar) text-(--color-text-secondary) border-(--color-border-light)";
 
   return (
     <div ref={containerRef} className="relative inline-block">
       {/* ── Trigger Badge ── */}
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className={`inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-bold border cursor-pointer select-none transition-opacity hover:opacity-80 ${badge}`}
+        className={`inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full text-xs font-bold border cursor-pointer select-none transition-all hover:opacity-80 ${badge}`}
       >
         {STATUS_LABELS[task.status] ?? task.status}
         <svg
@@ -76,13 +79,17 @@ const StatusDropdown = ({ task, onStatusChange }) => {
           stroke="currentColor"
           strokeWidth={2.5}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
 
       {/* ── Dropdown Panel ── */}
       {open && (
-        <div className="absolute left-0 top-full mt-1.5 z-50 w-36 bg-white rounded-xl shadow-lg border border-slate-100 py-1 overflow-hidden">
+        <div className="absolute left-0 top-full mt-1.5 z-50 w-36 bg-(--color-bg-card) rounded-xl shadow-(--shadow-md) border border-(--color-border-light) py-1 overflow-hidden transition-colors duration-200">
           {STATUSES.map((status) => {
             const isSelected = status === task.status;
             return (
@@ -90,13 +97,13 @@ const StatusDropdown = ({ task, onStatusChange }) => {
                 key={status}
                 onClick={() => handleSelect(status)}
                 className={`w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-left transition-colors
-                  ${isSelected ? OPTION_ACTIVE[status] : "text-slate-600 hover:bg-slate-50"}`}
+                  ${isSelected ? OPTION_ACTIVE[status] : "text-(--color-text-secondary) hover:bg-(--color-bg-sidebar) hover:text-(--color-text-primary)"}`}
               >
-                <span className={`w-2 h-2 rounded-full shrink-0 ${DOT_COLOR[status]}`} />
+                <span
+                  className={`w-2 h-2 rounded-full shrink-0 ${DOT_COLOR[status]}`}
+                />
                 {STATUS_LABELS[status] ?? status}
-                {isSelected && (
-                  <Check size={12} className="ml-auto shrink-0" />
-                )}
+                {isSelected && <Check size={12} className="ml-auto shrink-0" />}
               </button>
             );
           })}

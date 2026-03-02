@@ -104,7 +104,7 @@ const Tasks = () => {
         onConfirm={handleDeleteConfirm}
       />
 
-      <div className="flex flex-col flex-1 overflow-y-auto bg-slate-50 font-['Plus_Jakarta_Sans']">
+      <div className="flex flex-col flex-1 overflow-y-auto bg-(--color-bg-main)">
         {/* Header */}
         <TaskHeader
           currentView={view}
@@ -115,25 +115,25 @@ const Tasks = () => {
         {/* Body */}
         <div className="flex flex-col gap-6 px-8 py-6">
           {/* Search + Filters */}
-          <div className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-200">
+          <div className="flex items-center gap-3 p-4 bg-(--color-bg-card) rounded-2xl border border-(--color-border-light) shadow-(--shadow-sm) transition-colors duration-200">
             <div className="relative flex-1">
               <Search
                 size={16}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-(--color-text-muted)"
               />
               <input
                 type="text"
                 placeholder="Search tasks..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-50 rounded-xl text-sm text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-rose-200 transition"
+                className="w-full pl-10 pr-4 py-2.5 bg-(--color-bg-sidebar) rounded-xl text-sm text-(--color-text-primary) placeholder:text-(--color-text-muted) outline-none focus:ring-2 focus:ring-(--color-primary-500)/20 transition"
               />
             </div>
             <div className="flex items-center gap-3">
               <FilterDropdown label="All Timelines" />
               <FilterDropdown label="All Categories" />
               <FilterDropdown label="All Priorities" />
-              <button className="w-10 h-10 flex items-center justify-center bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors text-slate-600">
+              <button className="w-10 h-10 flex items-center justify-center bg-(--color-bg-sidebar) rounded-xl hover:bg-(--color-border-light) transition-colors text-(--color-text-secondary)">
                 <SlidersHorizontal size={16} />
               </button>
             </div>
@@ -161,9 +161,9 @@ const Tasks = () => {
               )}
               pagination={
                 <div className="px-6 py-4">
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-(--color-text-secondary)">
                     Showing{" "}
-                    <span className="font-bold text-slate-600">
+                    <span className="font-bold text-(--color-text-primary)">
                       {filtered.length}
                     </span>{" "}
                     task{filtered.length !== 1 ? "s" : ""}

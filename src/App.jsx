@@ -1,6 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useContext } from "react"; // Add this
-import { AuthContext } from "./contexts/AuthContext"; // Add this
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 
@@ -18,13 +16,14 @@ import ResetPassword from "./pages/auth/ResetPassword.jsx";
 import ResetPassSuccess from "./pages/auth/ResetPassSuccess.jsx";
 import useTheme from "./hooks/useTheme.jsx";
 import FallingTheme from "./components/FallingTheme.jsx";
+import { useAuth } from "./hooks/useAuth.jsx";
 
 function App() {
-  const { token } = useContext(AuthContext);
+  const { token } = useAuth();
   const { flowerIcon } = useTheme("default");
 
   return (
-    <div className="w-full h-screen flex bg-(--color-bg-main)">
+    <div className="w-full h-screen flex bg-(--color-bg-app) text-(--color-text-primary) transition-colors duration-200">
       {token ? (
         <>
           <SideBar />

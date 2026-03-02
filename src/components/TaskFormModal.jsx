@@ -656,7 +656,7 @@ export default function TaskFormModal({
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-(--color-text-inverse)/20 text-(--color-text-inverse) hover:bg-(--color-text-inverse)/30 transition"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-(--color-text-muted)/20 text-(--color-text-muted) hover:bg-(--color-text-inverse)/30 transition"
           >
             ✕
           </button>

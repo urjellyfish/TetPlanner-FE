@@ -46,7 +46,7 @@ export default function FallingTheme() {
   return (
     <div
       ref={containerRef}
-      className="fixed top-0 left-0 w-full h-screen overflow-hidden pointer-events-none z-0"
+      className="fixed top-0 left-0 w-full h-screen overflow-hidden pointer-events-none z-50"
     >
       {flowers.map((index) => (
         <div

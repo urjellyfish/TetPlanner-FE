@@ -7,6 +7,7 @@ import { RiWallet3Fill } from "react-icons/ri";
 import { FaCalendarAlt } from "react-icons/fa";
 import ThemeButton from "./ThemeButton";
 import ProfileButton from "./ProfileButton";
+import TetPlanner from "./TetPlanner";
 
 const SideBar = () => {
   return (

@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (token) {
+    if (token && token !== "undefined" && token !== "null") {
       localStorage.setItem("accessToken", token);
     } else {
       localStorage.removeItem("accessToken");
@@ -46,8 +46,14 @@ export function AuthProvider({ children }) {
     setLoading(true);
     setError("");
     try {
-      await verifyOTP(email, otp);
+      const response = await verifyOTP(email, otp);
+      const authToken = response.data?.accessToken || response.accessToken || response.data?.token || response.token;
+      
+      if (authToken) {
+        setToken(authToken);
+      }
       setUser({ email });
+      return response;
     } catch (err) {
       setError(err.message || "Verification failed. Please try again.");
       throw err;
@@ -75,9 +81,15 @@ export function AuthProvider({ children }) {
     setError("");
     try {
       const response = await loginService({ email, password });
-      if (response.success && response.data?.accessToken) {
-        setToken(response.data.accessToken);
+      
+      // Handle various potential token paths in the response
+      const authToken = response.data?.accessToken || response.accessToken || response.data?.token || response.token;
+      
+      if (response.success && authToken) {
+        setToken(authToken);
         setUser({ email });
+      } else if (response.success && !authToken) {
+        console.warn("Login successful but no token found in response:", response);
       }
       return response;
     } catch (err) {
