@@ -16,7 +16,7 @@ const SideBar = () => {
         <TetPlaner />
 
         <nav className="flex flex-col gap-2 mt-4">
-          <SideBarButton icon={RiDashboardFill} content="Dashboard" to="/" />
+          <SideBarButton icon={RiDashboardFill} content="Dashboard" to="/dashboard" />
           <SideBarButton icon={RiTaskFill} content="Task" to="/tasks" />
           <SideBarButton
             icon={RiWallet3Fill}

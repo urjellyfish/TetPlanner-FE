@@ -13,6 +13,7 @@ import ResetPassword from "./pages/ResetPassword";
 import ResetPassSuccess from "./pages/ResetPassSuccess";
 import { ToastContainer } from "react-toastify";
 import TaskProvider from "./contexts/TaskProvider";
+import DashboardProvider from "./contexts/DashboardProvider";
 
 function App() {
   return (
@@ -32,7 +33,14 @@ function App() {
               <SideBar />
               <TaskProvider>
                 <Routes>
-                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <DashboardProvider>
+                        <Dashboard />
+                      </DashboardProvider>
+                    }
+                  />
                   <Route path="/tasks" element={<Tasks />} />
                   <Route path="/shopping" element={<Shopping />} />
                   <Route path="/calendar" element={<Calendar />} />
