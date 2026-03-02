@@ -594,7 +594,7 @@ export function TaskForm({
         <button
           type="submit"
           disabled={!isValid || isSubmitting}
-          className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-(--btn-primary-bg) text-(--btn-primary-text) font-bold text-base shadow-(--btn-primary-shadow) hover:opacity-(--btn-primary-hover-opacity) disabled:opacity-50 disabled:cursor-not-allowed transition"
+          className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-[#e11d48] text-white font-bold text-base shadow-lg shadow-rose-100 hover:bg-[#be123c] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
         >
           <Save size={18} />
           {isSubmitting ? "Saving…" : "Save Task"}
@@ -643,20 +643,20 @@ export default function TaskFormModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm overflow-y-auto py-10">
       <div className="w-xl bg-(--color-bg-card) rounded-2xl border border-(--color-border-light) shadow-(--shadow-lg) overflow-hidden transition-colors duration-200">
-        {/* Header */}
-        <div className="flex items-start justify-between px-8 py-6 bg-(--gradient-primary)">
+        {/* Header - Using fixed brand colors for visibility across all themes */}
+        <div className="flex items-start justify-between px-8 py-6 bg-[#e11d48]">
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
-              <Icon size={24} className="text-(--color-text-inverse)" />
-              <h1 className="text-2xl font-bold text-(--color-text-inverse)">
+              <Icon size={24} className="text-white" />
+              <h1 className="text-2xl font-bold text-white">
                 {title}
               </h1>
             </div>
-            <p className="text-sm text-(--color-text-inverse)/80">{sub}</p>
+            <p className="text-sm text-white/90">{sub}</p>
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-(--color-text-muted)/20 text-(--color-text-muted) hover:bg-(--color-text-inverse)/30 transition"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition"
           >
             ✕
           </button>

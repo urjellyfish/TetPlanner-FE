@@ -7,7 +7,6 @@ import { RiWallet3Fill } from "react-icons/ri";
 import { FaCalendarAlt } from "react-icons/fa";
 import ThemeButton from "./ThemeButton";
 import ProfileButton from "./ProfileButton";
-import TetPlanner from "./TetPlanner";
 
 const SideBar = () => {
   return (
@@ -17,7 +16,7 @@ const SideBar = () => {
         <TetPlanner />
 
         <nav className="flex flex-col gap-2 mt-4">
-          <SideBarButton icon={RiDashboardFill} content="Dashboard" to="/" />
+          <SideBarButton icon={RiDashboardFill} content="Dashboard" to="/dashboard" />
           <SideBarButton icon={RiTaskFill} content="Task" to="/tasks" />
           <SideBarButton
             icon={RiWallet3Fill}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useShoppingItem } from "../../hooks/useShoppingItem";
-import { categoryAPI } from "../../api/categoryAPI";
+import { categoryAPI } from "../../api/categoryApi";
 import Modal from "../Modal";
 
 const ShoppingItemModal = ({
@@ -66,9 +66,10 @@ const ShoppingItemModal = ({
           quantity: 1,
           price: 0,
           note: "",
-          categoryId: 1,
+          categoryId: "",
           isChecked: false,
           budgetId: budgetId,
+          dueTime: "",
           occasionId: occasionId,
         });
       }

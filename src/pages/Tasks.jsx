@@ -173,15 +173,15 @@ const Tasks = () => {
             />
           )}
 
-          {/* ── Kanban View ── */}
-          {view === "kanban" && (
+          {/* ── Kanban View (Commented out because KanbanBoard is missing) ── */}
+          {/* {view === "kanban" && (
             <KanbanBoard
               tasks={filtered}
               onEdit={handleEditClick}
               onDelete={(t) => setDeleteTarget(t)}
               onAddTask={() => setModalTask(null)}
             />
-          )}
+          )} */}
         </div>
       </div>
     </>

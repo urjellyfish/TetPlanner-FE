@@ -157,14 +157,22 @@ const ShoppingTable = ({
                 </tr>
               ))
             ) : (
-              <tr>
-                <td
-                  colSpan="7"
-                  className="px-6 py-20 text-center text-(--color-text-muted) font-medium"
-                >
-                  No items found in this budget.
-                </td>
-              </tr>
+              <>
+                <tr>
+                  <td
+                    colSpan="7"
+                    className="px-6 py-10 text-center text-(--color-text-muted) font-medium italic"
+                  >
+                    No items found in this budget.
+                  </td>
+                </tr>
+                {/* Visual "blank" rows for better table feel */}
+                {[...Array(3)].map((_, i) => (
+                  <tr key={`empty-${i}`} className="h-16 opacity-20">
+                    <td colSpan="7" className="px-6 py-4 border-t border-(--color-border-light)"></td>
+                  </tr>
+                ))}
+              </>
             )}
           </tbody>
         </table>

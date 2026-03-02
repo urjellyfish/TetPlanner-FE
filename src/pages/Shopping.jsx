@@ -16,8 +16,8 @@ import BudgetAlertModal from "../components/shopping/BudgetAlertModal";
 // APIs
 import { budgetAPI } from "../api/budgetAPI";
 import { shoppingItemAPI } from "../api/shoppingItemAPI";
-import { occasionAPI } from "../api/occasionAPI";
-import { categoryAPI } from "../api/categoryAPI";
+import { occasionAPI } from "../api/occasionApi";
+import { categoryAPI } from "../api/categoryApi";
 
 const Shopping = () => {
   // loading flags for asynchronous data
@@ -199,7 +199,7 @@ const Shopping = () => {
   };
 
   return (
-    <div className="p-8 max-w-7xl mx-auto min-h-screen bg-(--color-bg-main) transition-colors duration-200">
+    <div className="p-4 md:p-8 w-full min-h-screen bg-(--color-bg-main) transition-colors duration-200">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
         <div>
@@ -229,7 +229,7 @@ const Shopping = () => {
           </button>
           <button
             onClick={openCreateModal}
-            className="flex items-center gap-2 px-5 py-2.5 bg-(--btn-primary-bg) text-(--btn-primary-text) rounded-xl text-sm font-bold shadow-(--btn-primary-shadow) hover:opacity-(--btn-primary-hover-opacity) hover:-translate-y-0.5 transition-all"
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#e11d48] text-white rounded-xl text-sm font-bold shadow-lg shadow-rose-100 hover:bg-[#be123c] hover:-translate-y-0.5 transition-all"
           >
             <Plus size={20} className="stroke-[3]" /> New Item
           </button>

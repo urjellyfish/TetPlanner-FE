@@ -64,12 +64,12 @@ const TaskHeader = ({ currentView, onViewChange, onCreateTask }) => (
         </button>
       </div>
 
-      {/* New Task CTA */}
+      {/* New Task CTA - Robust colors for all themes */}
       <button
         onClick={onCreateTask}
-        className="flex items-center gap-2 px-4 py-2 bg-(--color-primary-300)/80 hover:bg-(--color-primary-500) transition-colors duration-200 text-(--color-text-primary) rounded-xl text-sm font-medium shadow-(--shadow-sm) whitespace-nowrap"
+        className="flex items-center gap-2 px-4 py-2 bg-[#e11d48] hover:bg-[#be123c] transition-colors duration-200 text-white rounded-xl text-sm font-bold shadow-lg shadow-rose-100 whitespace-nowrap"
       >
-        <Plus size={14} />
+        <Plus size={14} strokeWidth={3} />
         New Task
       </button>
     </div>

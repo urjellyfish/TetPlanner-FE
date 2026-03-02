@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { categoryAPI } from "../../api/categoryAPI";
+import { categoryAPI } from "../../api/categoryApi";
 import { Plus, Trash2, Edit2, Check, X } from "lucide-react";
 import Modal from "../Modal";
 
