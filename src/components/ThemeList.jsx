@@ -1,5 +1,5 @@
 import React from "react";
-import useTheme from "../hooks/useTheme"; // Import hook từ Context vừa tạo
+import useTheme from "../hooks/useTheme";
 
 const ThemeList = () => {
   const { theme, flowerIcon, changeTheme, changeFlowerIcon } = useTheme();
@@ -39,7 +39,7 @@ const ThemeList = () => {
         Apricot-yellow
       </p>
 
-      {/* --- PHẦN ICON --- */}
+      {/* --- Cho nay la ICON --- */}
       <p
         className={`w-full text-left cursor-pointer p-2 rounded-md transition-colors duration-200 ${
           flowerIcon === "default"
@@ -48,7 +48,7 @@ const ThemeList = () => {
         }`}
         onClick={() => changeFlowerIcon("default")}
       >
-        None flower
+        None-icon
       </p>
 
       <p
