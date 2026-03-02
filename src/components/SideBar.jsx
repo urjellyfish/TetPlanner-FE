@@ -1,5 +1,5 @@
 import React from "react";
-import TetPlanner from "./TetPlanner";
+import TetPlaner from "./TetPlanner";
 import SideBarButton from "./SideBarButton";
 import { RiDashboardFill } from "react-icons/ri";
 import { RiTaskFill } from "react-icons/ri";

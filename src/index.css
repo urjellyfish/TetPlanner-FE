@@ -1,7 +1,7 @@
 /* =====================================================
    TET PLANNER PRO - GLOBAL DESIGN SYSTEM
    ===================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap");
 @import "tailwindcss";
 /* ===============================
    1. ROOT VARIABLES (LIGHT THEME)
@@ -26,6 +26,12 @@
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
   --color-info: #3b82f6;
+
+  /* ===== TOASTIFY THEME OVERRIDES ===== */
+  --toastify-color-success: var(--color-success);
+  --toastify-color-error: var(--color-danger);
+  --toastify-color-warning: var(--color-warning);
+  --toastify-color-info: var(--color-info);
 
   /* ===== BACKGROUND ===== */
   --color-bg-main: #f9fafb;
@@ -157,20 +163,20 @@
 /* ===============================
        3. GLOBAL RESET
        =============================== */
-  
-  * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: var(--font-family-base);
-    background: var(--color-bg-main);
-    color: var(--color-text-primary);
-    font-size: var(--fs-ms);
-    line-height: 1.5;
-  }
-  
-  /* ===============================
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-base);
+  background: var(--color-bg-main);
+  color: var(--color-text-primary);
+  font-size: var(--fs-ms);
+  line-height: 1.5;
+}
+
+/* ===============================
        4. REUSABLE COMPONENT BASE
        =============================== */
 
@@ -215,19 +221,19 @@
 /* ===============================
        5. UTILITY CLASSES
        =============================== */
-  
-  .text-secondary {
-    color: var(--color-text-secondary);
-  }
-  
-  .text-muted {
-    color: var(--color-text-muted);
-  }
-  
-  .shadow-md {
-    box-shadow: var(--shadow-md);
-  }
-  
-  .rounded-lg {
-    border-radius: var(--radius-lg);
-  }
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}

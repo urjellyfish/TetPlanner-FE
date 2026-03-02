@@ -1,16 +1,17 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import cover from "../assets/cover.jpg";
+import cover from "../../assets/cover.jpg";
 import { toast } from "react-toastify";
-import { AuthContext } from "../contexts/AuthContext";
+import TetPlanner from "../../components/TetPlanner";
+import { useAuth } from "../../hooks/useAuth";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const { login, error: contextError, loading } = useContext(AuthContext);
+  const { login, error: contextError, loading } = useAuth();
 
   const navigate = useNavigate();
 
@@ -49,14 +50,13 @@ function LoginForm() {
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 h-full">
         <div className="w-full max-w-md">
           {/* LOGO*/}
-          <div className="text-center mb-10">
-            <h1 className="text-4xl font-bold tracking-tight">
-              <span className="text-black">TetPlanner</span>
-              <span className="text-[#E11D48]">Pro</span>
-            </h1>
-          </div>
+          <TetPlanner
+            iconSize={"10xl"}
+            textSize={"4xl"}
+            textColor={"black"}
+          ></TetPlanner>
 
-          <div className="text-center mb-8">
+          <div className="text-center my-8">
             <h2 className="text-3xl font-bold text-[#E11D48] mb-2">
               Welcome back
             </h2>

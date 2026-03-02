@@ -55,17 +55,17 @@ function SignUp() {
 
       {/* ── Left cover ── */}
       <div
-        className="hidden lg:block flex-shrink-0 w-[40%] h-full bg-cover bg-center bg-no-repeat"
+        className="hidden lg:block shrink-0 w-[40%] h-full bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${CoverImage})` }}
       />
 
       {/* ── Right panel ── */}
       <div className="flex-1 flex items-center justify-center px-8 bg-white overflow-y-auto">
-        <div className="w-full max-w-[343px] py-10">
+        <div className="w-full max-w-85.75 py-10">
 
           {/* Logo + brand */}
           <div className="flex items-center justify-center gap-[6px] mb-2">
-            <div className="flex-shrink-0 mt-0.5">
+            <div className="shrink-0 mt-0.5">
               <FlowerLogo />
             </div>
             <p className="font-extrabold text-[22px] leading-none tracking-tight">
@@ -75,7 +75,7 @@ function SignUp() {
           </div>
 
           {/* Title */}
-          <h1 className="text-[15px] font-bold text-[#e11d48] text-center mb-[30px]">
+          <h1 className="text-[15px] font-bold text-[#e11d48] text-center mb-7.5">
             Create An Account
           </h1>
 
@@ -108,7 +108,7 @@ function SignUp() {
               <label className={labelCls}>Email Address</label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                  <HiOutlineMail className="w-[18px] h-[18px] text-[#e11d48]" />
+                  <HiOutlineMail className="w-4.5 h-4.5 text-[#e11d48]" />
                 </span>
                 <input
                   type="email"
@@ -145,8 +145,8 @@ function SignUp() {
                   aria-label="Toggle password visibility"
                 >
                   {showPassword
-                    ? <IoEyeOffOutline className="w-[18px] h-[18px]" />
-                    : <IoEyeOutline    className="w-[18px] h-[18px]" />}
+                    ? <IoEyeOffOutline className="w-4.5 h-4.5" />
+                    : <IoEyeOutline    className="w-4.5 h-4.5" />}
                 </button>
               </div>
               {errors.password && (
@@ -174,8 +174,8 @@ function SignUp() {
                   aria-label="Toggle confirm password visibility"
                 >
                   {showConfirm
-                    ? <IoEyeOffOutline className="w-[18px] h-[18px]" />
-                    : <IoEyeOutline    className="w-[18px] h-[18px]" />}
+                    ? <IoEyeOffOutline className="w-4.5 h-4.5" />
+                    : <IoEyeOutline    className="w-4.5 h-4.5" />}
                 </button>
               </div>
               {errors.confirmPassword && (
@@ -184,11 +184,11 @@ function SignUp() {
             </div>
 
             {/* Submit */}
-            <div className="flex flex-col items-center gap-[18px] mt-4">
+            <div className="flex flex-col items-center gap-4.5 mt-4">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-12 flex items-center justify-center gap-2 rounded-[6px] bg-[#e11d48] hover:bg-[#be123c] disabled:opacity-60 transition-colors text-white text-[15px] font-medium tracking-wide"
+                className="w-full h-12 flex items-center justify-center gap-2 rounded-md bg-[#e11d48] hover:bg-[#be123c] disabled:opacity-60 transition-colors text-white text-[15px] font-medium tracking-wide"
               >
                 {isSubmitting && <BiLoaderAlt className="animate-spin text-xl" />}
                 {isSubmitting ? "Signing up..." : "SIGN UP"}

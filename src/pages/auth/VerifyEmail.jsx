@@ -5,28 +5,32 @@ import { useAuth } from "../../hooks/useAuth";
 import FlowerLogo from "../../components/FlowerLogo.jsx";
 import { BiLoaderAlt } from "react-icons/bi";
 
-
 function VerifyEmail() {
-  const location  = useLocation();
-  const navigate  = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
   const { verifyEmail, resendOtp, error: authError, clearError } = useAuth();
 
   const email = location.state?.email || "your email";
 
-  const [code, setCode]             = useState(["", "", "", ""]);
-  const inputsRef                   = useRef([]);
+  const [code, setCode] = useState(["", "", "", ""]);
+  const inputsRef = useRef([]);
   const [secondsLeft, setSecondsLeft] = useState(60);
-  const [formError, setFormError]   = useState("");
+  const [formError, setFormError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isResending, setIsResending]   = useState(false);
+  const [isResending, setIsResending] = useState(false);
 
   // Auto-focus ô đầu tiên
-  useEffect(() => { inputsRef.current[0]?.focus(); }, []);
+  useEffect(() => {
+    inputsRef.current[0]?.focus();
+  }, []);
 
   // Đếm ngược
   useEffect(() => {
     if (secondsLeft <= 0) return;
-    const timer = setInterval(() => setSecondsLeft((p) => Math.max(p - 1, 0)), 1000);
+    const timer = setInterval(
+      () => setSecondsLeft((p) => Math.max(p - 1, 0)),
+      1000,
+    );
     return () => clearInterval(timer);
   }, [secondsLeft]);
 
@@ -49,10 +53,15 @@ function VerifyEmail() {
 
   const handlePaste = (e) => {
     e.preventDefault();
-    const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 4);
+    const pasted = e.clipboardData
+      .getData("text")
+      .replace(/\D/g, "")
+      .slice(0, 4);
     if (!pasted) return;
     const next = ["", "", "", ""];
-    pasted.split("").forEach((ch, i) => { next[i] = ch; });
+    pasted.split("").forEach((ch, i) => {
+      next[i] = ch;
+    });
     setCode(next);
     inputsRef.current[Math.min(pasted.length, 3)]?.focus();
   };
@@ -69,7 +78,7 @@ function VerifyEmail() {
     clearError();
     try {
       await verifyEmail({ email, otp });
-      navigate("/");           // → về trang chủ sau khi xác thực thành công
+      navigate("/"); // → về trang chủ sau khi xác thực thành công
     } catch {
       // authError đã set trong context
     } finally {
@@ -105,13 +114,13 @@ function VerifyEmail() {
     <div className="w-screen h-screen bg-[#f8fafc] flex overflow-hidden">
       {/* Left cover */}
       <div
-        className="hidden lg:block flex-shrink-0 w-[53%] h-full bg-cover bg-center bg-no-repeat"
+        className="hidden lg:block shrink-0 w-[53%] h-full bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${CoverImage})` }}
       />
 
       {/* Right panel */}
       <div className="flex-1 flex items-center justify-center px-8 overflow-y-auto">
-        <div className="w-full max-w-[400px] py-10">
+        <div className="w-full max-w-100 py-10">
           {/* Logo */}
           <div className="flex items-center justify-center gap-3 mb-10">
             <FlowerLogo />
@@ -129,12 +138,15 @@ function VerifyEmail() {
             </h1>
           </div>
 
-          <form onSubmit={handleSubmit} className="flex flex-col items-center gap-8">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col items-center gap-8"
+          >
             {/* Description */}
-            <p className="text-[13px] leading-[20px] text-center text-[#6b7280] max-w-[320px] font-['Plus_Jakarta_Sans']">
+            <p className="text-[13px] leading-5 text-center text-[#6b7280] max-w-[320px] font-['Plus_Jakarta_Sans']">
               We sent you a 4 digit code to verify your email address{" "}
-              <span className="font-semibold text-[#111827]">({email})</span>. Enter it in the
-              field below.
+              <span className="font-semibold text-[#111827]">({email})</span>.
+              Enter it in the field below.
             </p>
 
             {/* OTP boxes */}
@@ -142,17 +154,20 @@ function VerifyEmail() {
               {code.map((value, index) => (
                 <input
                   key={index}
-                  ref={(el) => { inputsRef.current[index] = el; }}
+                  ref={(el) => {
+                    inputsRef.current[index] = el;
+                  }}
                   type="text"
                   inputMode="numeric"
                   maxLength={1}
                   value={value}
                   onChange={(e) => handleChange(index, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(index, e)}
-                  className={`w-[56px] h-[56px] rounded-[8px] border-2 text-center text-[24px] font-bold text-[#111827] outline-none transition-all font-['Plus_Jakarta_Sans']
-                    ${value
-                      ? "border-[#e11d48] bg-[#fff5f7]"
-                      : "border-[#e5e7eb] bg-white"
+                  className={`w-14 h-14 rounded-lg border-2 text-center text-[24px] font-bold text-[#111827] outline-none transition-all font-['Plus_Jakarta_Sans']
+                    ${
+                      value
+                        ? "border-[#e11d48] bg-[#fff5f7]"
+                        : "border-[#e5e7eb] bg-white"
                     }
                     focus:border-[#e11d48] focus:ring-2 focus:ring-[#e11d48]/20`}
                 />
@@ -181,7 +196,9 @@ function VerifyEmail() {
               </p>
               <p>
                 Expires in{" "}
-                <span className="text-[#e11d48] font-semibold">{formattedTime}</span>
+                <span className="text-[#e11d48] font-semibold">
+                  {formattedTime}
+                </span>
               </p>
             </div>
 
@@ -189,7 +206,7 @@ function VerifyEmail() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-[240px] h-[50px] flex items-center justify-center gap-2 rounded-[10px] bg-[#e11d48] hover:bg-[#be123c] disabled:opacity-60 transition-colors text-white text-[16px] font-bold font-['Plus_Jakarta_Sans']"
+              className="w-60 h-12.5 flex items-center justify-center gap-2 rounded-[10px] bg-[#e11d48] hover:bg-[#be123c] disabled:opacity-60 transition-colors text-white text-[16px] font-bold font-['Plus_Jakarta_Sans']"
             >
               {isSubmitting && <BiLoaderAlt className="animate-spin text-xl" />}
               {isSubmitting ? "Verifying..." : "Submit"}
