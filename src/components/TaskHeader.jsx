@@ -30,39 +30,13 @@ const TaskHeader = ({ currentView, onViewChange, onCreateTask }) => (
         <Download size={15} className="shrink-0" />
         Export
       </button>
-      <button className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-800 shadow-sm hover:bg-slate-50 transition-colors whitespace-nowrap">
+      <button onClick={() => window.location.href = '/settings/category'} className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-800 shadow-sm hover:bg-slate-50 transition-colors whitespace-nowrap">
         <Tag size={15} className="shrink-0" />
         Manage Categories
       </button>
 
       {/* Visual separator */}
       <div className="w-px h-6 bg-slate-200 shrink-0" />
-
-      {/* Kanban / List view toggle */}
-      <div className="flex items-center bg-slate-100 rounded-xl p-1 gap-1">
-        <button
-          onClick={() => onViewChange("kanban")}
-          className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
-            currentView === "kanban"
-              ? "bg-white shadow-sm text-[var(--color-primary-500)]"
-              : "text-slate-500 hover:text-slate-700"
-          }`}
-        >
-          <LayoutGrid size={14} />
-          Kanban
-        </button>
-        <button
-          onClick={() => onViewChange("list")}
-          className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold transition-colors ${
-            currentView === "list"
-              ? "bg-white shadow-sm text-[var(--color-primary-500)]"
-              : "text-slate-500 hover:text-slate-700"
-          }`}
-        >
-          <List size={14} />
-          List
-        </button>
-      </div>
 
       {/* New Task CTA */}
       <button
