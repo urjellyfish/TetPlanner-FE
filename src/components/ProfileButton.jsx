@@ -1,8 +1,19 @@
-import React from "react";
 import { assets } from "../assets/asset";
 import { BiLogOut } from "react-icons/bi";
+import { useAuth } from "../hooks/useAuth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ProfileButton = ({ name }) => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    toast.success("Logged out successfully.");
+    logout();
+    navigate("/login");
+  };
+
   return (
     <div className="w-full h-12 p-2 flex items-center justify-start gap-2 bg-(--color-bg-card) rounded-xl">
       {/* Profile image */}
@@ -17,7 +28,10 @@ const ProfileButton = ({ name }) => {
       </div>
 
       {/* Logout button */}
-      <BiLogOut className="text-4xl text-(--color-text-muted) hover:text-(--color-text-primary) transition-colors duration-200" />
+      <BiLogOut
+        className="text-4xl text-(--color-text-muted) hover:text-(--color-text-primary) transition-colors duration-200 cursor-pointer"
+        onClick={handleLogout}
+      />
     </div>
   );
 };

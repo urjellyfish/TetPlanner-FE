@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
-import cover from "../assets/cover.jpg";
+import cover from "../../assets/cover.jpg";
 import { toast } from "react-toastify";
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 
 function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
@@ -148,7 +148,7 @@ function ResetPassword() {
             <button
               type="submit"
               disabled={loading}
-              className="w-[343px] h-[50px] mt-2 rounded-[10px] bg-[#E11D48] text-white font-semibold transition-all hover:opacity-90 active:scale-95 shadow-lg shadow-red-100 disabled:opacity-50"
+              className="w-85.75 h-12.5 mt-2 rounded-[10px] bg-[#E11D48] text-white font-semibold transition-all hover:opacity-90 active:scale-95 shadow-lg shadow-red-100 disabled:opacity-50"
             >
               {loading ? "UPDATING..." : "UPDATE PASSWORD"}
             </button>

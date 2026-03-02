@@ -1,15 +1,15 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import cover from "../assets/cover.jpg";
-import { AuthContext } from "../contexts/AuthContext";
+import cover from "../../assets/cover.jpg";
+import { useAuth } from "../../hooks/useAuth";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const { forgotPassword, loading } = useContext(AuthContext);
+  const { forgotPassword, loading } = useAuth();
 
   const handleSendLink = async (e) => {
     e.preventDefault();
