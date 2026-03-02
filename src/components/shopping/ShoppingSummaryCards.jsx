@@ -1,13 +1,23 @@
 import React from "react";
 import { Wallet, ShoppingCart, Calculator, Pencil } from "lucide-react";
 
-const SummaryCard = ({ title, amount, icon: Icon, iconBg, iconColor, textColor, onEdit }) => (
+const SummaryCard = ({
+  title,
+  amount,
+  icon: Icon,
+  iconBg,
+  iconColor,
+  textColor,
+  onEdit,
+}) => (
   <div className="card flex items-center justify-between p-6 bg-white shadow-sm rounded-xl relative group">
     <div className="flex flex-col gap-1">
       <div className="flex items-center gap-2">
-        <span className="text-sm font-medium text-gray-400 uppercase tracking-wider">{title}</span>
+        <span className="text-sm font-medium text-gray-400 uppercase tracking-wider">
+          {title}
+        </span>
         {onEdit && (
-          <button 
+          <button
             onClick={onEdit}
             className="p-1 hover:bg-rose-50 rounded-md text-gray-300 hover:text-rose-500 opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
             title="Edit Budget"
@@ -21,13 +31,17 @@ const SummaryCard = ({ title, amount, icon: Icon, iconBg, iconColor, textColor, 
       </span>
     </div>
     <div className={`p-3 rounded-lg ${iconBg}`}>
-      <Icon size={24} className={iconColor} />
+      {Icon && <Icon size={24} className={iconColor} />}
     </div>
   </div>
 );
 
 const ShoppingSummaryCards = ({ summary, onEditTotalBudget }) => {
-  const { totalBudget = 0, spentToday = 0, remainingBudget = 0 } = summary || {};
+  const {
+    totalBudget = 0,
+    spentToday = 0,
+    remainingBudget = 0,
+  } = summary || {};
 
   return (
     <>
@@ -59,4 +73,3 @@ const ShoppingSummaryCards = ({ summary, onEditTotalBudget }) => {
 };
 
 export default ShoppingSummaryCards;
-

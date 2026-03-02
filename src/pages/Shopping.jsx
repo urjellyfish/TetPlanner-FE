@@ -17,7 +17,9 @@ import { budgetAPI } from "../api/budgetAPI";
 import { shoppingItemAPI } from "../api/shoppingItemAPI";
 
 const Shopping = () => {
-  const [loading, setLoading] = useState(true);
+  // loading flags for asynchronous data
+  const [itemsLoading, setItemsLoading] = useState(true); // for shopping items
+  const [budgetsLoading, setBudgetsLoading] = useState(false); // for budget list
   const [summary, setSummary] = useState({
     totalBudget: 0,
     spentToday: 0,
@@ -51,8 +53,15 @@ const Shopping = () => {
   const [currentItem, setCurrentItem] = useState(null);
 
   // Initial load
+  // React 18 StrictMode double-invokes effects in development, which causes
+  // budgetAPI.getBudgets() to be called twice and produces duplicate 500 errors
+  // if the server is misbehaving.  We guard with a ref so the request runs once.
+  const didInitialFetch = React.useRef(false);
   useEffect(() => {
-    fetchBudgets();
+    if (!didInitialFetch.current) {
+      fetchBudgets();
+      didInitialFetch.current = true;
+    }
 
     // temp hardcoded occasions until API available
     setOccasions([
@@ -63,6 +72,7 @@ const Shopping = () => {
   }, []);
 
   const fetchBudgets = async () => {
+    setBudgetsLoading(true);
     try {
       const res = await budgetAPI.getBudgets(0, 100);
       if (res.success) {
@@ -82,13 +92,16 @@ const Shopping = () => {
         }
       }
     } catch (err) {
+      console.log(err);
       toast.error("Failed to load budgets");
+    } finally {
+      setBudgetsLoading(false);
     }
   };
 
   const fetchItems = useCallback(async () => {
     if (!selectedBudget) return;
-    setLoading(true);
+    setItemsLoading(true);
     try {
       // 1. Fetch Summary for selected budget
       const summaryRes = await budgetAPI.getBudgetSummary(selectedBudget.id);
@@ -128,7 +141,7 @@ const Shopping = () => {
       console.error("Error:", error);
       toast.error("Failed to load shopping items");
     } finally {
-      setLoading(false);
+      setItemsLoading(false);
     }
   }, [selectedBudget, page, size]);
 
@@ -144,6 +157,7 @@ const Shopping = () => {
         fetchBudgets(); // Refresh chart data
       }
     } catch (err) {
+      console.log(err);
       toast.error("Failed to update status");
     }
   };
@@ -218,7 +232,8 @@ const Shopping = () => {
               <div className="relative">
                 <button
                   onClick={() => setShowBudgetDropdown(!showBudgetDropdown)}
-                  className="flex items-center gap-3 bg-gray-50/50 hover:bg-gray-100 px-4 py-2 rounded-xl border border-gray-100 text-sm font-bold text-gray-700 transition-all outline-none"
+                  disabled={budgetsLoading}
+                  className="flex items-center gap-3 bg-gray-50/50 hover:bg-gray-100 px-4 py-2 rounded-xl border border-gray-100 text-sm font-bold text-gray-700 transition-all outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {selectedBudget?.name || "Select Budget"}
                   <ChevronDown
@@ -226,6 +241,9 @@ const Shopping = () => {
                     className={`transition-transform duration-200 ${showBudgetDropdown ? "rotate-180" : ""}`}
                   />
                 </button>
+                {budgetsLoading && (
+                  <span className="ml-2 text-sm text-gray-500">Loading…</span>
+                )}
 
                 {showBudgetDropdown && (
                   <>
@@ -272,6 +290,7 @@ const Shopping = () => {
       <div className="mt-8">
         <ShoppingTable
           items={items}
+          loading={itemsLoading}
           onToggleStatus={handleToggleStatus}
           onEdit={openEditModal}
           onDelete={openDeleteModal}

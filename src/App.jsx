@@ -53,28 +53,23 @@ function App() {
     <ShoppingItemProvider>
       <>
         <Routes>
-        <Route path="/login" element={<LoginForm />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/reset-success" element={<ResetPassSuccess />} />
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="/*" element={<MainLayout />} />
-      </Routes>
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/reset-success" element={<ResetPassSuccess />} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/*" element={<MainLayout />} />
+        </Routes>
 
-      <ToastContainer
-        position="top-center"
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-    </>
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          theme="colored"
+        />
+      </>
     </ShoppingItemProvider>
   );
 }

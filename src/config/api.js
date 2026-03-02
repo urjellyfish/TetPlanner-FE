@@ -1,8 +1,8 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "/api",
-    withCredentials: true,
+  baseURL: "http://3.25.245.12:8080",
+  // withCredentials: true,
 });
 
 api.interceptors.request.use(
@@ -13,5 +13,5 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
