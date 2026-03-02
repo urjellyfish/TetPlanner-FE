@@ -4,7 +4,7 @@
  * Section header + 3-column DayCard grid for the daily breakdown.
  * Reads data from DashboardContext.
  */
-import { useDashboard } from "../../hooks/useDashboard";
+import { useDashboard } from "../hooks/useDashboard";
 import DayCard from "./DayCard";
 
 const DailyBreakdown = () => {

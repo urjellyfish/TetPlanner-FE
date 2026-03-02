@@ -4,7 +4,7 @@
  * Large red gradient card showing live countdown to Tết.
  * Countdown logic lives in useCountdown hook.
  */
-import { useCountdown } from "../../hooks/useCountdown";
+import { useCountdown } from "../hooks/useCountdown";
 
 /** Formats a number to always show 2 digits */
 const pad = (n) => String(n).padStart(2, "0");
