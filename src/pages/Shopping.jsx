@@ -271,7 +271,7 @@ const Shopping = () => {
               </div>
             </div>
 
-            <div className="h-[300px]">
+            <div className="h-75">
               <SpendingChart data={spendingData} />
             </div>
           </div>
