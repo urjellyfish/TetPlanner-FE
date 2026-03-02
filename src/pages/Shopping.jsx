@@ -10,11 +10,14 @@ import ShoppingItemModal from "../components/shopping/ShoppingItemModal";
 import DeleteConfirmModal from "../components/shopping/DeleteConfirmModal";
 import CategoryModal from "../components/shopping/CategoryModal";
 import UpdateBudgetModal from "../components/shopping/UpdateBudgetModal";
+import CreateBudgetModal from "../components/shopping/CreateBudgetModal";
 import BudgetAlertModal from "../components/shopping/BudgetAlertModal";
 
 // APIs
 import { budgetAPI } from "../api/budgetAPI";
 import { shoppingItemAPI } from "../api/shoppingItemAPI";
+import { occasionAPI } from "../api/occasionAPI";
+import { categoryAPI } from "../api/categoryAPI";
 
 const Shopping = () => {
   const [loading, setLoading] = useState(true);
@@ -28,6 +31,7 @@ const Shopping = () => {
   const [budgets, setBudgets] = useState([]);
   const [selectedBudget, setSelectedBudget] = useState(null);
   const [showBudgetDropdown, setShowBudgetDropdown] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   // placeholder for occasions list; could be fetched from API
   const [occasions, setOccasions] = useState([]);
@@ -45,6 +49,7 @@ const Shopping = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isBudgetModalOpen, setIsBudgetModalOpen] = useState(false);
+  const [isCreateBudgetModalOpen, setIsCreateBudgetModalOpen] = useState(false);
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
   const [alertType, setAlertType] = useState("warning");
   const [alertPercentage, setAlertPercentage] = useState(80);
@@ -53,14 +58,32 @@ const Shopping = () => {
   // Initial load
   useEffect(() => {
     fetchBudgets();
-
-    // temp hardcoded occasions until API available
-    setOccasions([
-      { id: "1", name: "New Year" },
-      { id: "2", name: "Family Gathering" },
-      { id: "3", name: "Travel" },
-    ]);
+    fetchOccasions();
+    fetchCategories();
   }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const res = await categoryAPI.getCategories();
+      if (res.success) {
+        setCategories(res.data);
+      }
+    } catch (err) {
+      console.error("Failed to load categories:", err);
+    }
+  };
+
+  const fetchOccasions = async () => {
+    try {
+      const res = await occasionAPI.getOccasions();
+      if (res.success) {
+        setOccasions(res.data);
+      }
+    } catch (err) {
+      console.error("Failed to load occasions:", err);
+      toast.error("Failed to load occasions");
+    }
+  };
 
   const fetchBudgets = async () => {
     try {
@@ -90,27 +113,15 @@ const Shopping = () => {
     if (!selectedBudget) return;
     setLoading(true);
     try {
-      // 1. Fetch Summary for selected budget
+      // 1. Fetch Summary for selected budget (for cards and alert logic)
       const summaryRes = await budgetAPI.getBudgetSummary(selectedBudget.id);
       if (summaryRes.success) {
-        const s = summaryRes.data;
+        const s = summaryRes.data; 
         setSummary({
           totalBudget: s.totalAmount,
           spentToday: s.actualSpent,
           remainingBudget: s.totalAmount - s.actualSpent,
         });
-
-        // Items from summary might not be paged, so let's fetch paged items instead if needed
-        const processedItems = s.shoppingItems.map((item) => ({
-          ...item,
-          isChecked:
-            item.isChecked !== undefined ? item.isChecked : item.checked, // Handle field name variation
-        }));
-        setItems(processedItems.slice(page * size, (page + 1) * size));
-        setTotalElements(processedItems.length);
-        setTotalPages(Math.ceil(processedItems.length / size));
-
-        // NOTE: Spending chart is now handled by fetchBudgets to show all budgets
 
         // Check budget thresholds for alerts
         const percent = (s.actualSpent / s.totalAmount) * 100;
@@ -124,13 +135,22 @@ const Shopping = () => {
           setIsAlertModalOpen(true);
         }
       }
+
+      // 2. Fetch Paged Items specifically using shoppingItemAPI as requested
+      const itemsRes = await shoppingItemAPI.getItemsByBudget(selectedBudget.id, page, size);
+      if (itemsRes.success) {
+        const pagedData = itemsRes.data;
+        setItems(pagedData.content || []);
+        setTotalElements(pagedData.totalElements || 0);
+        setTotalPages(pagedData.totalPages || 0);
+      }
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("Failed to load shopping items");
+      console.error("Error fetching data:", error);
+      toast.error("Failed to load shopping data");
     } finally {
       setLoading(false);
     }
-  }, [selectedBudget, page, size]);
+  }, [page, size, selectedBudget]);
 
   useEffect(() => {
     fetchItems();
@@ -247,6 +267,17 @@ const Shopping = () => {
                           {b.name}
                         </button>
                       ))}
+                      <div className="border-t border-gray-50 mt-1 pt-1">
+                        <button
+                          onClick={() => {
+                            setIsCreateBudgetModalOpen(true);
+                            setShowBudgetDropdown(false);
+                          }}
+                          className="w-full text-left px-4 py-2.5 text-sm font-bold text-rose-600 hover:bg-rose-50 transition-colors flex items-center gap-2"
+                        >
+                          <Plus size={16} /> New Budget
+                        </button>
+                      </div>
                     </div>
                   </>
                 )}
@@ -321,6 +352,15 @@ const Shopping = () => {
         budget={selectedBudget}
         onSuccess={() => {
           fetchItems();
+          fetchBudgets();
+        }}
+      />
+
+      <CreateBudgetModal
+        isOpen={isCreateBudgetModalOpen}
+        onClose={() => setIsCreateBudgetModalOpen(false)}
+        occasions={occasions}
+        onSuccess={() => {
           fetchBudgets();
         }}
       />

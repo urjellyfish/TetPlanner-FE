@@ -51,29 +51,25 @@ const ShoppingTable = ({
                   )}
                 </td>
                 <td className="px-6 py-4 text-left">
-                  <span
-                    className="px-2 py-1 rounded text-[10px] font-bold uppercase"
-                    style={{
-                      backgroundColor:
-                        item.categoryName === "Food"
-                          ? "#FEF3C7"
-                          : item.categoryName === "Gift"
-                            ? "#F3E8FF"
-                            : item.categoryName === "Decoration"
-                              ? "#FCE7F3"
-                              : "#F3F4F6",
-                      color:
-                        item.categoryName === "Food"
-                          ? "#D97706"
-                          : item.categoryName === "Gift"
-                            ? "#7E22CE"
-                            : item.categoryName === "Decoration"
-                              ? "#BE185D"
-                              : "#6B7280",
-                    }}
-                  >
-                    {item.categoryName || "General"}
-                  </span>
+                  {(() => {
+                    console.log(item);
+                    const catName = item.categoryName || "General";
+                    const isFood = catName.toLowerCase().includes("food");
+                    const isGift = catName.toLowerCase().includes("gift");
+                    const isDecor = catName.toLowerCase().includes("decor");
+                    
+                    return (
+                      <span
+                        className="px-2 py-1 rounded text-[10px] font-bold uppercase"
+                        style={{
+                          backgroundColor: isFood ? "#FEF3C7" : isGift ? "#F3E8FF" : isDecor ? "#FCE7F3" : "#F3F4F6",
+                          color: isFood ? "#D97706" : isGift ? "#7E22CE" : isDecor ? "#BE185D" : "#6B7280",
+                        }}
+                      >
+                        {catName}
+                      </span>
+                    );
+                  })()}
                 </td>
                 <td className="px-6 py-4 text-gray-600 text-left">
                   ${item.price.toLocaleString()}

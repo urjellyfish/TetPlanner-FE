@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useShoppingItem } from "../../hooks/useShoppingItem";
+import { categoryAPI } from "../../api/categoryAPI";
 import Modal from "../Modal";
 
 const ShoppingItemModal = ({
@@ -13,6 +14,7 @@ const ShoppingItemModal = ({
   occasions = [],
 }) => {
   const { createItem, updateItem, loading, setLoading } = useShoppingItem();
+  const [categories, setCategories] = useState([]);
   const [error, setError] = useState("");
   const isEdit = !!initialItem;
 
@@ -26,6 +28,24 @@ const ShoppingItemModal = ({
     budgetId: budgetId,
     occasionId: occasionId,
   });
+
+  useEffect(() => {
+    const fetchCats = async () => {
+      try {
+        const res = await categoryAPI.getCategories();
+        if (res.success) {
+          setCategories(res.data);
+          // Set default category if creating new
+          if (!initialItem && res.data.length > 0) {
+            setFormData(prev => ({ ...prev, categoryId: res.data[0].id }));
+          }
+        }
+      } catch (err) {
+        console.error("Failed to load categories", err);
+      }
+    };
+    fetchCats();
+  }, [isOpen, initialItem]);
 
   useEffect(() => {
     if (isOpen) {
@@ -133,11 +153,11 @@ const ShoppingItemModal = ({
               value={formData.categoryId}
               onChange={handleChange}
             >
-              <option value={1}>Food & Beverage</option>
-              <option value={2}>Decorations</option>
-              <option value={3}>Gifts</option>
-              <option value={4}>Travel</option>
-              <option value={5}>Others</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
           </div>
           <div>

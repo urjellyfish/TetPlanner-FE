@@ -3,9 +3,9 @@ import { api } from "../config/api";
 const BASE_URL = "/shopping-items";
 
 export const shoppingItemAPI = {
-  // GET ALL ITEMS
-  getAllItems: async (page = 0, size = 10) => {
-    const response = await api.get(BASE_URL, {
+  // GET ITEMS BY BUDGET
+  getItemsByBudget: async (budgetId, page = 0, size = 10) => {
+    const response = await api.get(`${BASE_URL}/budget/${budgetId}`, {
       params: { page, size },
     });
     return response.data;
