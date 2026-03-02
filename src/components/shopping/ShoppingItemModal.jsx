@@ -3,7 +3,15 @@ import { toast } from "react-toastify";
 import { useShoppingItem } from "../../hooks/useShoppingItem";
 import Modal from "../Modal";
 
-const ShoppingItemModal = ({ isOpen, onClose, initialItem = null, onSuccess, budgetId, occasionId }) => {
+const ShoppingItemModal = ({
+  isOpen,
+  onClose,
+  initialItem = null,
+  onSuccess,
+  budgetId,
+  occasionId,
+  occasions = [],
+}) => {
   const { createItem, updateItem, loading, setLoading } = useShoppingItem();
   const [error, setError] = useState("");
   const isEdit = !!initialItem;
@@ -53,7 +61,12 @@ const ShoppingItemModal = ({ isOpen, onClose, initialItem = null, onSuccess, bud
     if (error && name === "name") setError("");
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : type === "number" ? Number(value) : value,
+      [name]:
+        type === "checkbox"
+          ? checked
+          : type === "number"
+            ? Number(value)
+            : value,
     }));
   };
 
@@ -87,15 +100,17 @@ const ShoppingItemModal = ({ isOpen, onClose, initialItem = null, onSuccess, bud
   };
 
   return (
-    <Modal 
-      isOpen={isOpen} 
-      onClose={onClose} 
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
       title={isEdit ? "Update Shopping Item" : "Add New Item"}
       maxWidth="500px"
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">Item Name*</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">
+            Item Name*
+          </label>
           <input
             className={`w-full p-3 rounded-xl border ${error ? "border-rose-500" : "border-gray-200"} focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 transition-all outline-none`}
             name="name"
@@ -109,7 +124,9 @@ const ShoppingItemModal = ({ isOpen, onClose, initialItem = null, onSuccess, bud
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Category</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Category
+            </label>
             <select
               name="categoryId"
               className="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 outline-none"
@@ -124,7 +141,9 @@ const ShoppingItemModal = ({ isOpen, onClose, initialItem = null, onSuccess, bud
             </select>
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Quantity</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">
+              Quantity
+            </label>
             <input
               type="number"
               name="quantity"
@@ -137,7 +156,9 @@ const ShoppingItemModal = ({ isOpen, onClose, initialItem = null, onSuccess, bud
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">Price (VND)</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">
+            Price (VND)
+          </label>
           <input
             type="number"
             name="price"
@@ -148,8 +169,30 @@ const ShoppingItemModal = ({ isOpen, onClose, initialItem = null, onSuccess, bud
           />
         </div>
 
+        {/* Occasion dropdown */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">Note</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">
+            Occasion
+          </label>
+          <select
+            name="occasionId"
+            className="w-full p-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 outline-none"
+            value={formData.occasionId}
+            onChange={handleChange}
+          >
+            <option value="">Select Occasion</option>
+            {occasions.map((o) => (
+              <option key={o.id} value={o.id}>
+                {o.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-1">
+            Note
+          </label>
           <textarea
             name="note"
             className="w-full p-3 rounded-xl border border-gray-200 h-24 resize-none focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500 outline-none"
@@ -169,7 +212,10 @@ const ShoppingItemModal = ({ isOpen, onClose, initialItem = null, onSuccess, bud
               onChange={handleChange}
               className="w-4 h-4 text-rose-500 rounded border-gray-300 focus:ring-rose-500"
             />
-            <label htmlFor="isCheckedModal" className="text-sm text-gray-600 cursor-pointer">
+            <label
+              htmlFor="isCheckedModal"
+              className="text-sm text-gray-600 cursor-pointer"
+            >
               Mark as completed
             </label>
           </div>

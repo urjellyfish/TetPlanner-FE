@@ -11,7 +11,7 @@ import { useShoppingItem } from "../../hooks/useShoppingItem";
 import FormCardLayout from "../../components/FormCardLayout";
 import SuccessToast from "../../components/SuccessToast";
 
-const UpdateShoppingItem = () => {
+const UpdateShoppingItem = ({ occasions = [] }) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { updateItem, getItemById, loading, setLoading } = useShoppingItem();
@@ -24,6 +24,7 @@ const UpdateShoppingItem = () => {
     price: 0,
     note: "",
     categoryId: 1,
+    occasionId: "",
     isChecked: false,
   });
 
@@ -39,6 +40,7 @@ const UpdateShoppingItem = () => {
             price: res.data.price || 0,
             note: res.data.note || "",
             categoryId: res.data.categoryId || 1,
+            occasionId: res.data.occasionId || "",
             isChecked: res.data.isChecked || false,
           });
         }
@@ -272,6 +274,40 @@ const UpdateShoppingItem = () => {
             onChange={handleChange}
             min="0"
           />
+        </div>
+
+        {/* Occasion */}
+        <div>
+          <label
+            style={{
+              display: "block",
+              fontSize: "var(--fs-sm)",
+              fontWeight: "var(--fw-semibold)",
+              marginBottom: "var(--space-1)",
+            }}
+          >
+            Occasion
+          </label>
+          <select
+            name="occasionId"
+            style={{
+              width: "100%",
+              padding: "var(--space-3)",
+              borderRadius: "var(--radius-sm)",
+              border: "1px solid var(--color-border-medium)",
+              backgroundColor: "var(--color-bg-card)",
+              color: "var(--color-text-primary)",
+            }}
+            value={formData.occasionId}
+            onChange={handleChange}
+          >
+            <option value="">Select Occasion</option>
+            {occasions.map((o) => (
+              <option key={o.id} value={o.id}>
+                {o.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Note */}

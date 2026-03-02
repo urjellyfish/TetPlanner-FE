@@ -8,6 +8,7 @@ import SuccessToast from "../../components/SuccessToast";
 const CreateNewItem = ({
   currentBudgetId = "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   currentOccasionId = "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  occasions = [], // array of {id,name}
 }) => {
   const navigate = useNavigate();
   const { createItem, undoItem, loading, setLoading } = useShoppingItem();

@@ -58,7 +58,10 @@ const CategoryModal = ({ isOpen, onClose, onSuccess }) => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure? This might affect items in this category.")) return;
+    if (
+      !window.confirm("Are you sure? This might affect items in this category.")
+    )
+      return;
     try {
       const res = await categoryAPI.deleteCategory(id);
       if (res.success) {
@@ -72,7 +75,12 @@ const CategoryModal = ({ isOpen, onClose, onSuccess }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Manage Categories" maxWidth="450px">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Manage Categories"
+      maxWidth="450px"
+    >
       <div className="flex flex-col gap-4">
         <div className="flex gap-2">
           <input
@@ -95,7 +103,10 @@ const CategoryModal = ({ isOpen, onClose, onSuccess }) => {
           ) : (
             <div className="flex flex-col gap-2">
               {categories.map((cat) => (
-                <div key={cat.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl group">
+                <div
+                  key={cat.id}
+                  className="flex items-center justify-between p-3 bg-gray-50 rounded-xl group"
+                >
                   {editingId === cat.id ? (
                     <input
                       className="flex-1 p-1 bg-white border border-rose-200 rounded outline-none"
@@ -104,19 +115,44 @@ const CategoryModal = ({ isOpen, onClose, onSuccess }) => {
                       autoFocus
                     />
                   ) : (
-                    <span className="text-gray-700 font-medium">{cat.name}</span>
+                    <span className="text-gray-700 font-medium">
+                      {cat.name}
+                    </span>
                   )}
 
                   <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                     {editingId === cat.id ? (
                       <>
-                        <button onClick={() => handleUpdate(cat.id)} className="p-1 text-green-500 hover:bg-green-50 rounded"><Check size={16}/></button>
-                        <button onClick={() => setEditingId(null)} className="p-1 text-rose-500 hover:bg-rose-50 rounded"><X size={16}/></button>
+                        <button
+                          onClick={() => handleUpdate(cat.id)}
+                          className="p-1 text-green-500 hover:bg-green-50 rounded"
+                        >
+                          <Check size={16} />
+                        </button>
+                        <button
+                          onClick={() => setEditingId(null)}
+                          className="p-1 text-rose-500 hover:bg-rose-50 rounded"
+                        >
+                          <X size={16} />
+                        </button>
                       </>
                     ) : (
                       <>
-                        <button onClick={() => { setEditingId(cat.id); setEditName(cat.name); }} className="p-1 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded"><Edit2 size={16}/></button>
-                        <button onClick={() => handleDelete(cat.id)} className="p-1 text-gray-400 hover:text-rose-500 hover:bg-rose-50 rounded"><Trash2 size={16}/></button>
+                        <button
+                          onClick={() => {
+                            setEditingId(cat.id);
+                            setEditName(cat.name);
+                          }}
+                          className="p-1 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded"
+                        >
+                          <Edit2 size={16} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(cat.id)}
+                          className="p-1 text-gray-400 hover:text-rose-500 hover:bg-rose-50 rounded"
+                        >
+                          <Trash2 size={16} />
+                        </button>
                       </>
                     )}
                   </div>
