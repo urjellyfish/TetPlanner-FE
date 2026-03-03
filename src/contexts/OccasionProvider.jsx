@@ -6,7 +6,7 @@ import {
   createOccasion,
   updateOccasion,
   deleteOccasion,
-} from "../api/occasionAPI";
+} from "../api/occasion_temp";
 import { OccasionContext } from "./OccasionContext";
 export function OccasionProvider({ children }) {
   // --- States ---

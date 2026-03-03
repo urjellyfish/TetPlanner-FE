@@ -8,7 +8,7 @@ import {
   updateTaskStatus,
   getTaskById,
 } from "../api/taskApi";
-import { getOccasions } from "../api/occasionAPI";
+import { getOccasions } from "../api/occasion_temp";
 import { getTaskCategories } from "../api/taskCategoryAPI";
 
 /**
