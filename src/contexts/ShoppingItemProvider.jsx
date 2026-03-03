@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import { ShoppingItemContext } from "./shoppingItemContext";
+import { ShoppingItemContext } from "./ShoppingItemContext";
 import { shoppingItemAPI } from "../api/shoppingItemAPI";
 
 export const ShoppingItemProvider = ({ children }) => {
