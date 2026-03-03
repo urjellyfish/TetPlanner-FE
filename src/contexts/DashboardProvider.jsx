@@ -5,6 +5,7 @@ import {
   getShoppingSummary,
   getBudgetSummary,
   getDailyBreakdown,
+  getTaskSummary,
 } from "../api/dashboardApi";
 import { budgetAPI } from "../api/budgetAPI";
 import {
@@ -17,9 +18,7 @@ import {
 const TET_DATE = new Date("2026-02-10T00:00:00");
 
 export function DashboardProvider({ children }) {
-  const taskCtx = useContext(TaskContext);
-  const tasks = taskCtx?.tasks ?? [];
-
+  const [taskStats, setTaskStats] = useState({ done: 0, total: 0, percent: 0 });
   const [budgets, setBudgets] = useState([]);
   const [selectedBudgetId, setSelectedBudgetId] = useState(null);
   const [shoppingSummary, setShoppingSummary] = useState({
@@ -49,15 +48,17 @@ export function DashboardProvider({ children }) {
 
         // 2. Parallel fetch based on the resolved activeBudgetId
         // Even if activeBudgetId is null (no budgets exist), these return default empty shapes
-        const [shopping, budget, daily] = await Promise.all([
+        const [shopping, budget, daily, tasksData] = await Promise.all([
           getShoppingSummary(activeBudgetId),
           getBudgetSummary(activeBudgetId),
           getDailyBreakdown(),
+          getTaskSummary(),
         ]);
 
         setShoppingSummary(shopping);
         setBudgetSummary(budget);
         setDailyBreakdown(daily);
+        setTaskStats(tasksData);
       } catch (err) {
         console.error("Dashboard fetch failed:", err);
       } finally {
@@ -75,9 +76,6 @@ export function DashboardProvider({ children }) {
   useEffect(() => {
     fetchDashboardData();
   }, [fetchDashboardData]);
-
-  // Derive task stats LIVE from TaskContext
-  const taskStats = calcTaskStats(tasks);
 
   const shoppingPercent =
     shoppingSummary.percent ??

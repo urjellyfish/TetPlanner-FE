@@ -16,3 +16,22 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error),
 );
+
+// Response interceptor to handle 401 Unauthorized
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Clear token from local storage immediately
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("userName");
+      localStorage.removeItem("user");
+      
+      // Redirect to login page if not already there
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
+    }
+    return Promise.reject(error);
+  }
+);

@@ -21,13 +21,22 @@ const USE_MOCK = false;
 async function fetchRealDailyBreakdown() {
   // Fetch occasions, budgets, and shopping categories in parallel
   const [occasionsRes, budgetsRes] = await Promise.all([
-    api.get("/occasions"),
-    api.get("/budget", { params: { page: 0, size: 100 } }),
-    api.get("/shopping-categories"),
+    api.get("/occasions").catch((err) => {
+      console.error("Failed to fetch occasions", err);
+      return { data: { data: [] } };
+    }),
+    api.get("/budget", { params: { page: 0, size: 100 } }).catch((err) => {
+      console.error("Failed to fetch budgets", err);
+      return { data: { data: { budgets: [] } } };
+    }),
+    api.get("/shopping-categories").catch((err) => {
+      console.error("Failed to fetch shopping categories", err);
+      return { data: { data: [] } };
+    }),
   ]);
 
-  const occasions = occasionsRes.data.data || [];
-  const budgets = budgetsRes.data?.data?.budgets || [];
+  const occasions = occasionsRes?.data?.data || [];
+  const budgets = budgetsRes?.data?.data?.budgets || [];
 
   // For each occasion, find matching budget and fetch its items
   const results = await Promise.all(
@@ -160,7 +169,11 @@ export async function getTaskSummary() {
     return { done: tasks.completed, total: tasks.total };
   }
   const data = await fetchRealTaskProgress();
-  return { done: data.completedTasks, total: data.totalTasks };
+  return { 
+    done: data.completedTasks || 0, 
+    total: data.totalTasks || 0,
+    percent: data.percentage || 0
+  };
 }
 
 /**
