@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Plus, Download, Settings, ChevronDown, Calendar } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 // Components
@@ -18,6 +19,9 @@ import { budgetAPI } from "../api/budgetAPI";
 import { shoppingItemAPI } from "../api/shoppingItemAPI";
 import { occasionAPI } from "../api/occasion_temp";
 import { categoryAPI } from "../api/categoryApi";
+
+// Hooks
+import { useDeferredAction } from "../hooks/useDeferredAction.jsx";
 
 const Shopping = () => {
   // loading flags for asynchronous data
@@ -63,6 +67,9 @@ const Shopping = () => {
   // BUG FIX 2: Stop the alert modal from spamming during pagination
   const alertedBudgets = useRef(new Set());
 
+  // Deferred action hook for undo support
+  const { scheduleAction } = useDeferredAction();
+
   useEffect(() => {
     // We now actually check the ref before fetching!
     if (!didInitialFetch.current) {
@@ -96,6 +103,10 @@ const Shopping = () => {
     }
   };
 
+  // Read budgetId from query params (from Daily Breakdown VIEW LIST)
+  const [searchParams] = useSearchParams();
+  const queryBudgetId = searchParams.get("budgetId");
+
   const fetchBudgets = async () => {
     setBudgetsLoading(true);
     try {
@@ -112,7 +123,11 @@ const Shopping = () => {
         );
 
         if (bList.length > 0 && !selectedBudget) {
-          setSelectedBudget(bList[0]);
+          // If budgetId from query param, select that budget
+          const fromQuery = queryBudgetId
+            ? bList.find((b) => String(b.id) === String(queryBudgetId))
+            : null;
+          setSelectedBudget(fromQuery || bList[0]);
         }
       }
     } catch (err) {
@@ -170,17 +185,39 @@ const Shopping = () => {
     fetchItems();
   }, [fetchItems]);
 
-  const handleToggleStatus = async (itemId, isChecked) => {
-    try {
-      const res = await shoppingItemAPI.updateItem(itemId, { isChecked });
-      if (res.success) {
-        fetchItems();
-        fetchBudgets();
-      }
-    } catch (err) {
-      console.log(err);
-      toast.error("Failed to update status");
-    }
+  const handleToggleStatus = (itemId, isChecked) => {
+    const originalItems = [...items];
+
+    scheduleAction({
+      actionKey: `toggle-item-${itemId}`,
+      toastMessage: isChecked
+        ? "Marked as bought – Undo?"
+        : "Marked as pending – Undo?",
+      onOptimistic: () => {
+        // Immediately flip the checkbox in the UI
+        setItems((prev) =>
+          prev.map((item) =>
+            item.id === itemId ? { ...item, isChecked } : item,
+          ),
+        );
+      },
+      actionFn: async () => {
+        const res = await shoppingItemAPI.updateItem(itemId, { isChecked });
+        if (res.success) {
+          fetchItems();
+          fetchBudgets();
+        }
+      },
+      onUndo: () => {
+        setItems(originalItems);
+        toast.info("Status change undone.");
+      },
+      onError: (err) => {
+        console.error("Failed to update item status:", err);
+        setItems(originalItems);
+        toast.error("Failed to update status");
+      },
+    });
   };
 
   const openCreateModal = () => {

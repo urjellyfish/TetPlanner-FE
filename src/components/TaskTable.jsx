@@ -23,7 +23,7 @@ export default function TaskTable({
   const colSpan = columns.length;
 
   return (
-    <div className="bg-(--color-bg-card) rounded-2xl border border-(--color-border-light) shadow-(--shadow-sm) overflow-hidden transition-colors duration-200">
+    <div className="bg-(--color-bg-card) rounded-2xl border border-(--color-border-light) shadow-(--shadow-sm) transition-colors duration-200">
       <table className="w-full text-left">
         <thead>
           {/* Replaced slate-50 with your sidebar/subtle background for contrast */}

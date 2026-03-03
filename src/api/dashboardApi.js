@@ -15,23 +15,71 @@ import { mockDashboardData, mockDailyBreakdown } from "../service/mock/dashboard
 const USE_MOCK = false;
 
 async function fetchRealDailyBreakdown() {
-  const res = await api.get("/occasions");
-  const occasions = res.data.data || [];
-  
-  // Map occasions to the format expected by DayCard
-  return occasions.map(occ => ({
-    id: occ.id,
-    date: occ.date,
-    lunarDay: occ.name, // Using occasion name as the primary title
-    isBigDay: true,      // Occasions from the occasions API are "Big Days"
-    tasks: (occ.tasks || []).map(t => ({
-      id: t.id,
-      title: t.title,
-      completed: t.status === "DONE" || t.status === "done",
-      highlight: t.priority === "HIGH" || t.priority === "high"
-    })),
-    shoppingLists: [] // Occasions API currently doesn't provide associated shopping lists
-  }));
+  // Fetch occasions, budgets, and shopping categories in parallel
+  const [occasionsRes, budgetsRes, categoriesRes] = await Promise.all([
+    api.get("/occasions"),
+    api.get("/budget", { params: { page: 0, size: 100 } }),
+    api.get("/shopping-categories"),
+  ]);
+
+  const occasions = occasionsRes.data.data || [];
+  const budgets = budgetsRes.data?.data?.budgets || [];
+  const categories = categoriesRes.data?.data || [];
+
+  // For each occasion, find matching budget and fetch its items
+  const results = await Promise.all(
+    occasions.map(async (occ) => {
+      const matchedBudget = budgets.find(b => b.occasionId === occ.id);
+
+      let shoppingLists = [];
+      if (matchedBudget) {
+        try {
+          const itemsRes = await api.get(`/shopping-items/budget/${matchedBudget.id}`, {
+            params: { page: 0, size: 100 },
+          });
+          const items = itemsRes.data?.data?.content || [];
+
+          if (items.length > 0) {
+            // Group items by categoryName
+            const grouped = {};
+            items.forEach(item => {
+              const catName = item.categoryName || "General";
+              if (!grouped[catName]) grouped[catName] = [];
+              grouped[catName].push(item.name);
+            });
+
+            shoppingLists = Object.entries(grouped).map(([name, itemNames], idx) => ({
+              id: `${matchedBudget.id}-cat-${idx}`,
+              name,
+              itemCount: itemNames.length,
+              preview: itemNames.slice(0, 3).join(", ") + (itemNames.length > 3 ? "..." : ""),
+              budgetId: matchedBudget.id,
+            }));
+          }
+        } catch (err) {
+          console.error(`Failed to fetch items for budget ${matchedBudget.id}:`, err);
+        }
+      }
+
+      return {
+        id: occ.id,
+        date: occ.date,
+        lunarDay: occ.name,
+        isBigDay: true,
+        tasks: (occ.tasks || []).map(t => ({
+          id: t.id,
+          title: t.title,
+          status: (t.status || "TODO").toUpperCase(),
+          completed: t.status === "DONE" || t.status === "done",
+          highlight: t.priority === "HIGH" || t.priority === "high"
+        })),
+        shoppingLists,
+        budgetId: matchedBudget?.id || null,
+      };
+    })
+  );
+
+  return results;
 }
 
 async function fetchRealTaskProgress() {
@@ -54,16 +102,16 @@ async function fetchRealBudgetProgress(budgetId) {
 export async function getShoppingSummary(budgetId) {
   if (USE_MOCK) {
     const { shopping } = mockDashboardData;
-    return { 
-      total: shopping.total, 
+    return {
+      total: shopping.total,
       remaining: shopping.remaining,
       percent: calculateProgress(shopping.total - shopping.remaining, shopping.total)
     };
   }
   if (!budgetId) return { total: 0, remaining: 0, percent: 0 };
   const data = await fetchRealShoppingProgress(budgetId);
-  return { 
-    total: data.totalShoppingItem || 0, 
+  return {
+    total: data.totalShoppingItem || 0,
     remaining: data.remainingShoppingItem || 0,
     percent: data.percentage || 0
   };
@@ -72,16 +120,16 @@ export async function getShoppingSummary(budgetId) {
 export async function getBudgetSummary(budgetId) {
   if (USE_MOCK) {
     const { budget } = mockDashboardData;
-    return { 
-      used: budget.used, 
+    return {
+      used: budget.used,
       total: budget.total,
       percent: calculateProgress(budget.used, budget.total)
     };
   }
   if (!budgetId) return { used: 0, total: 1, percent: 0 };
   const data = await fetchRealBudgetProgress(budgetId);
-  return { 
-    used: data.usedBudget || 0, 
+  return {
+    used: data.usedBudget || 0,
     total: data.totalBudget || 0,
     percent: data.percentage || 0
   };

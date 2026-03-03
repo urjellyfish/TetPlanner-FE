@@ -16,7 +16,7 @@ const DashboardHeader = () => {
   const selectedBudget = budgets.find((b) => b.id === selectedBudgetId);
 
   return (
-    <div className="flex items-center justify-between px-8 py-6 bg-white/80 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-10 font-['Plus_Jakarta_Sans'] transition-colors duration-200">
+    <div className="flex items-center justify-between px-8 py-6 bg-white/80 backdrop-blur-sm border-b border-slate-200 sticky top-0 z-30 font-['Plus_Jakarta_Sans'] transition-colors duration-200">
       {/* Left — title block */}
       <div className="flex flex-col gap-1">
         <h1 className="text-[30px] font-bold leading-9 text-[#1e293b] tracking-tight">

@@ -1,27 +1,42 @@
 import React from "react";
 import { toast } from "react-toastify";
 import { useShoppingItem } from "../../hooks/useShoppingItem";
+import { useDeferredAction } from "../../hooks/useDeferredAction.jsx";
 import { AlertTriangle } from "lucide-react";
 import Modal from "../Modal";
 
 const DeleteConfirmModal = ({ isOpen, onClose, item, onSuccess }) => {
   const { deleteItem, loading, setLoading } = useShoppingItem();
+  const { scheduleAction } = useDeferredAction();
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     if (!item) return;
-    setLoading(true);
-    try {
-      const res = await deleteItem(item.id);
-      if (res.success) {
-        toast.info("Item deleted successfully");
+
+    // Close modal immediately so user sees the undo toast
+    onClose();
+
+    scheduleAction({
+      actionKey: `delete-shopping-item-${item.id}`,
+      toastMessage: `"${item.name}" deleted – Undo?`,
+      onOptimistic: () => {
+        // Let the parent know to refresh (remove item from list optimistically)
         onSuccess();
-        onClose();
-      }
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to delete item");
-    } finally {
-      setLoading(false);
-    }
+      },
+      actionFn: async () => {
+        const res = await deleteItem(item.id);
+        // After actual deletion, refresh data from server
+        onSuccess();
+      },
+      onUndo: () => {
+        // Item was not actually deleted on backend, just re-fetch to restore
+        onSuccess();
+        toast.info("Delete undone.");
+      },
+      onError: (err) => {
+        onSuccess(); // re-fetch to restore
+        toast.error(err.response?.data?.message || "Failed to delete item");
+      },
+    });
   };
 
   return (
@@ -32,7 +47,7 @@ const DeleteConfirmModal = ({ isOpen, onClose, item, onSuccess }) => {
         </div>
         <h3 className="text-lg font-bold text-gray-900 mb-2">Are you sure?</h3>
         <p className="text-gray-500 mb-6 px-4">
-          You are about to delete <span className="font-semibold text-gray-800">"{item?.name}"</span>. This action cannot be undone.
+          You are about to delete <span className="font-semibold text-gray-800">"{item?.name}"</span>. You can undo this within 5 seconds.
         </p>
         <div className="flex gap-3 w-full px-2">
           <button
