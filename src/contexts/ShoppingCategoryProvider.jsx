@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import { shoppingCategoryAPI } from "../api/shoppingCategoryAPI";
-import { ShoppingCategoryContext } from "./shoppingCategoryContext";
+import { ShoppingCategoryContext } from "./ShoppingCategoryContext";
 
 export const ShoppingCategoryProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
