@@ -93,7 +93,7 @@ const ShoppingTable = ({
                     </span>
                   </td>
                   <td className="px-6 py-4 text-(--color-text-secondary) text-left transition-colors duration-200">
-                    ${(item.price || 0).toLocaleString()}
+                    {(item.price || 0).toLocaleString()} đ
                   </td>
                   <td className="px-6 py-4 text-(--color-text-secondary) text-left transition-colors duration-200">
                     {item.quantity || 1}
