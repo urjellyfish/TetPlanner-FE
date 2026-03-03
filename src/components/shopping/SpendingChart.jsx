@@ -34,7 +34,7 @@ const SpendingChart = ({ data = [] }) => {
                 }}
               >
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
-                  ${item.amount.toLocaleString()}
+                  {item.amount.toLocaleString()} đ
                 </div>
               </div>
               <span className="mt-4 text-sm font-medium text-gray-500">

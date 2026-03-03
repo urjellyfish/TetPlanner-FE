@@ -99,10 +99,10 @@ const ShoppingTable = ({
                     {item.quantity || 1}
                   </td>
                   <td className="px-6 py-4 text-right font-bold text-(--color-text-primary) transition-colors duration-200">
-                    $
                     {(
                       (item.price || 0) * (item.quantity || 1)
-                    ).toLocaleString()}
+                    ).toLocaleString()}{" "}
+                    đ
                   </td>
                   <td className="px-6 py-4 text-left">
                     <button
@@ -171,7 +171,10 @@ const ShoppingTable = ({
                 {/* Visual "blank" rows for better table feel */}
                 {[...Array(3)].map((_, i) => (
                   <tr key={`empty-${i}`} className="h-16 opacity-20">
-                    <td colSpan="7" className="px-6 py-4 border-t border-(--color-border-light)"></td>
+                    <td
+                      colSpan="7"
+                      className="px-6 py-4 border-t border-(--color-border-light)"
+                    ></td>
                   </tr>
                 ))}
               </>
